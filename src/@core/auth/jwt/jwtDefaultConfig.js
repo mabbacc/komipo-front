@@ -1,6 +1,7 @@
 // ** Auth Endpoints
 export default {
-  loginEndpoint: '/jwt/login',
+  // loginEndpoint: '/jwt/login',
+  loginEndpoint: `${process.env.REACT_APP_API_SERVER_URL}/auth/A01-SignInAuth`,
   registerEndpoint: '/jwt/register',
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',
