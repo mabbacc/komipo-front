@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { Col, Row } from "reactstrap"
 import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
 
-const R2List = () => {
+const R2ComparaitveStatus = () => {
     
     return (
         <Fragment>
@@ -20,4 +20,4 @@ const R2List = () => {
     )
 }
 
-export default R2List
+export default R2ComparaitveStatus

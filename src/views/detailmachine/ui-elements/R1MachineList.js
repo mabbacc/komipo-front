@@ -1,8 +1,8 @@
 import { Fragment, useCallback } from "react"
 import { Button, Card, CardBody, Col, Row } from "reactstrap"
-import { useHistory } from 'react-router'
+import { useHistory } from "react-router"
 
-const R1FacilityList = () => {
+const R1MachineList = () => {
     const history = useHistory()
 
     const linkToDashboard = useCallback(() => {
@@ -12,6 +12,7 @@ const R1FacilityList = () => {
     },
     [history]
 )
+
     return (
         <Fragment>
             {/* <Row>
@@ -22,7 +23,7 @@ const R1FacilityList = () => {
             <Card className="text-center mb-1">
                 <CardBody>
                     <Row>
-                        <Col className='col-1 d-flex'>
+                        <Col className='text-left col-1 d-flex'>
                             <Button.Ripple 
                                 color={'secondary'}
                                 block
@@ -37,4 +38,4 @@ const R1FacilityList = () => {
     )
 }
 
-export default R1FacilityList
+export default R1MachineList

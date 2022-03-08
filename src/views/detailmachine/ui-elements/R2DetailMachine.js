@@ -4,7 +4,7 @@ import { Card, Col, Row } from "reactstrap"
 import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
 import CardTransactions from '@src/views/ui-elements/cards/advance/CardTransactions'
 
-const R2EquipmentDetail = () => {
+const R2DetailMachine = () => {
     return (
         <Fragment>
             <Row className='match-height'>
@@ -31,4 +31,4 @@ const R2EquipmentDetail = () => {
     )
 }
 
-export default R2EquipmentDetail
+export default R2DetailMachine

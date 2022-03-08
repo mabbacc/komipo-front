@@ -24,7 +24,7 @@ const UserDropdown = () => {
         <Avatar img={defaultAvatar} imgHeight='40' imgWidth='40' status='online' />
       </DropdownToggle>
       <DropdownMenu end>
-        <DropdownItem tag={Link} to='/' onClick={e => e.preventDefault()}>
+        {/* <DropdownItem tag={Link} to='/' onClick={e => e.preventDefault()}>
           <User size={14} className='me-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>
@@ -52,7 +52,7 @@ const UserDropdown = () => {
         <DropdownItem tag={Link} to='/' onClick={e => e.preventDefault()}>
           <HelpCircle size={14} className='me-75' />
           <span className='align-middle'>FAQ</span>
-        </DropdownItem>
+        </DropdownItem> */}
         <DropdownItem tag={Link} to='/login'>
           <Power size={14} className='me-75' />
           <span className='align-middle'>Logout</span>
