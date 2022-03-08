@@ -1,6 +1,6 @@
 import { Fragment } from "react"
-import { Col, Row } from "reactstrap"
-import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
+import { CardBody, Col, Row, Card, CardTitle } from "reactstrap"
+import ComparativeStatus from "./ComparativeStatus"
 
 const R2ComparaitveStatus = () => {
     
@@ -8,11 +8,20 @@ const R2ComparaitveStatus = () => {
         <Fragment>
             <Row>
                 <Col xl='6'>
-                    <CardMedal></CardMedal>
+                    <Card>
+                        <CardBody style={{height: '300px'}}>
+                            <CardTitle tag='h5'>Comparative status(current)</CardTitle>
+                            <ComparativeStatus />
+                        </CardBody>
+                    </Card>
                     {/* Comparative status */}
                 </Col>
                 <Col xl='6'>
-                    <CardMedal></CardMedal>
+                    <Card>
+                        <CardBody style={{height: '300px'}}>
+                            <CardTitle tag='h5'>Alarm history table (Report 기능 포함)</CardTitle>
+                        </CardBody>
+                    </Card>
                     {/* Alarm History table */}
                 </Col>
             </Row>

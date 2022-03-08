@@ -1,6 +1,5 @@
 import { Fragment } from "react"
-import { Col, Row } from "reactstrap"
-import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
+import { Col, Row, Card, CardBody, CardTitle } from "reactstrap"
 
 const R3ComparativeTrend = () => {
 
@@ -8,8 +7,17 @@ const R3ComparativeTrend = () => {
         <Fragment>
             <Row>
                 <Col xl='12'>
-                    <CardMedal></CardMedal>
+                    <Card>
+                        <CardBody style={{height: '300px'}}>
+                            <CardTitle tag='h5'>Comparative Trend</CardTitle>
+                        </CardBody>
+                    </Card>
                     {/* Comparative Trend */}
+                </Col>
+                <Col>
+                    <Card>
+                        <CardBody>기간 선정</CardBody>
+                    </Card>
                 </Col>
             </Row>
         </Fragment>

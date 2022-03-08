@@ -1,14 +1,15 @@
 import { Fragment } from "react"
 import { Col, Row } from "reactstrap"
-import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
+import Chart from 'react-apexcharts'
 
 
-const ComparativeStatus = () => {
-    
-
-    return (
-        <Fragment>
-       
+const ComparativeStatus = () => {          
+      return (
+          <Fragment>
+            <Row>
+                <Col>
+                </Col>
+            </Row>
         </Fragment>
     )
 }
