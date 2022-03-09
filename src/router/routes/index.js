@@ -4,7 +4,7 @@ import { lazy } from 'react'
 const TemplateTitle = '%s - Vuexy React Admin Template'
 
 // ** Default Route
-const DefaultRoute = '/home'
+const DefaultRoute = '/dashboard'
 
 // ** Merge Routes
 const Routes = [
@@ -28,6 +28,31 @@ const Routes = [
     path: '/error',
     component: lazy(() => import('../../views/Error')),
     layout: 'BlankLayout'
+  },
+  // komipo pages
+  {
+    path: '/dashboard',
+    component: lazy(() => import('../../views/dashboard')),
+    meta: {
+      resource: 'Auth',
+      action: 'read'
+    }
+  },
+  {
+    path: '/subboard',
+    component: lazy(() => import('../../views/subboard')),
+    meta: {
+      resource: 'Auth',
+      action: 'read'
+    }
+  },
+  {
+    path: '/detailmachine',
+    component: lazy(() => import('../../views/detailmachine')),
+    meta: {
+      resource: 'Auth',
+      action: 'read'
+    }
   }
 ]
 

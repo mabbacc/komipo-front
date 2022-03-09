@@ -1,0 +1,88 @@
+stages:
+  - docker-build
+  - deploy
+
+variables:
+  IMAGE_NAME: 'komipo-front'
+
+####################### Stage
+docker-build_stg:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - name: docker:dind
+  before_script:
+    - export VERSION=$(date +%y.%m.%d).stg
+    - echo $CI_REGISTRY_USER, $CI_REGISTRY_PASSWORD, $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$VERSION" -t "$CI_REGISTRY_IMAGE:stg" -f DockerfileStg .
+    - echo "Docker build success!"
+    - docker push --all-tags "$CI_REGISTRY_IMAGE"
+    - docker images | grep "$IMAGE_NAME"
+  tags:
+    - komipo_front_stg
+  only:
+    - stg
+
+deploy_stg:
+  stage: deploy
+  image: docker:latest
+  services:
+    - name: docker:dind
+  before_script:
+    - export VERSION=$(date +%y.%m.%d).stg
+  script:
+    - echo "Deploy Start!"
+    - if [ "$( docker container inspect -f '{{.State.Status}}' $IMAGE_NAME )" = "running" ];
+      then
+      docker stop $IMAGE_NAME;
+      docker container rm $IMAGE_NAME;
+      fi
+    - docker run -p 36081:80 -d --restart=always --name $IMAGE_NAME $CI_REGISTRY_IMAGE:$VERSION
+    - echo "Deploy Finish!"
+  tags:
+    - komipo_front_stg
+  only:
+    - stg
+
+####################### Production
+docker-build:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - name: docker:dind
+  before_script:
+    - export VERSION=$(date +%y.%m.%d).prd
+    - echo $CI_REGISTRY_USER, $CI_REGISTRY_PASSWORD, $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$VERSION" -t "$CI_REGISTRY_IMAGE:prd" -f DockerfilePrd .
+    - echo "Docker build success!"
+    - docker push --all-tags "$CI_REGISTRY_IMAGE"
+    - docker images | grep "$IMAGE_NAME"
+  tags:
+    - komipo_front_prd
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - name: docker:dind
+  before_script:
+    - export VERSION=$(date +%y.%m.%d).prd
+  script:
+    - echo "Deploy Start!"
+    - if [ "$( docker container inspect -f '{{.State.Status}}' $IMAGE_NAME )" = "running" ];
+      then
+      docker stop $IMAGE_NAME;
+      docker container rm $IMAGE_NAME;
+      fi
+    - docker run -p 80:80 -d --restart=always --name $IMAGE_NAME $CI_REGISTRY_IMAGE:$VERSION
+    - echo "Deploy Finish!"
+  tags:
+    - komipo_front_prd
+  only:
+    - main
