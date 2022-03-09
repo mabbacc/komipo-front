@@ -18,7 +18,6 @@ const LayoutWrapper = props => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state)
-
   const navbarStore = store.navbar
   const contentWidth = store.layout.contentWidth
 
