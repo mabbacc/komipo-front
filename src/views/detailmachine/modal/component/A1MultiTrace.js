@@ -1,5 +1,7 @@
 import { Fragment } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
+import A1aParameterTrend from "./graphs/A1aParameterTrend"
+import A1bParameterTrend from "./graphs/A1bParameterTrend"
 
 const A1MultiTrace = () => {
     return (
@@ -15,10 +17,10 @@ const A1MultiTrace = () => {
             <Row>
                 <Col>
                     <Card>
-                        <CardBody style={{height: '250px'}}>Parameter Trend</CardBody>
+                        <A1aParameterTrend /> 
                     </Card>
                     <Card>
-                        <CardBody style={{height: '250px'}}>위상 Parameter Trend</CardBody>
+                        <A1bParameterTrend />
                     </Card>
                 </Col>
             </Row>

@@ -1,7 +1,30 @@
 import { Fragment } from "react"
 import { Button, Card, CardBody, Col, Row } from "reactstrap"
+import Chart from 'react-apexcharts'
 
 const TopLevel = () => {
+    const options = {
+        series: [44, 55, 41, 17, 15],
+        chart: {
+        type: 'donut'
+      },
+      legend: {
+        show: false
+      },
+      responsive: [
+          {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    ]
+      }
     return (
         <Fragment>
             <div id='dashboard-ecommerce'>
@@ -23,7 +46,27 @@ const TopLevel = () => {
                             </div>
                         </Col>
                         <Card>
-                            <CardBody style={{height: '200px'}} />
+                            <Row>
+                                <Col xl='6'>
+                                    <Chart
+                                        options={options}
+                                        series={options.series}
+                                        type="donut"
+                                        height="200"
+                                        width='100%'
+                                    />
+                                </Col>
+                                <Col xl='6'>
+                                    <Chart
+                                        options={options}
+                                        series={options.series}
+                                        type="donut"
+                                        height="200"
+                                        width='100%'
+                                    />
+                                </Col>
+                            </Row>
+                            {/* <CardBody style={{height: '200px'}} /> */}
                         </Card>
                     </Col>
                     <Col xl='6'>
