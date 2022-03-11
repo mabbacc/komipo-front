@@ -77,3 +77,23 @@ export const selectThemeColors = (theme) => ({
     neutral30: "#ededed" // for input hover border-color
   }
 })
+
+
+let _seed = 42
+Math.random = () => {
+  _seed = _seed * 16807 % 2147483647
+  return (_seed - 1) / 2147483647
+}
+
+export const generateDayWiseTimeSeries = (baseval, count, yrange) => {
+  let i = 0
+  const series = []
+  while (i < count) {
+    const x = baseval
+    const y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
+    series.push([x, y])
+    baseval += 86400000
+    i++
+  }
+  return series
+}

@@ -1,5 +1,7 @@
 import { Fragment } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
+import A3aSpectrumPlot from "./graphs/A3aSpectrumPlot"
+import A3bSpectrumPlot from "./graphs/A3bSpectrumPlot"
 
 const A3Spectrum = () => {
     return (
@@ -15,12 +17,12 @@ const A3Spectrum = () => {
             <Row>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>Spectrum Plot 1</CardBody>
+                        <A3aSpectrumPlot />
                     </Card>
                 </Col>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>Spectrum Plot 2</CardBody>
+                        <A3bSpectrumPlot />
                     </Card>
                 </Col>
             </Row>

@@ -3,15 +3,15 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'Predictive Diagnosis Monitoring System for Integrated V.M.S',
+    appLogoImage: require('@src/assets/images/logo/img_ci_info02.png').default
   },
   layout: {
     isRTL: false,
     skin: 'light', // light, dark, bordered, semi-dark
     routerTransition: 'fadeIn', // fadeIn, fadeInLeft, zoomIn, none or check this for more transition https://animate.style/
     type: 'vertical', // vertical, horizontal
-    contentWidth: 'boxed', // full, boxed
+    contentWidth: 'full', // full, boxed
     menu: {
       isHidden: false,
       isCollapsed: false

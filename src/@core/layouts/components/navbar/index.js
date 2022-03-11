@@ -3,10 +3,11 @@ import { Fragment } from 'react'
 
 // ** Custom Components
 import NavbarUser from './NavbarUser'
+import NavbarBookmarks from './NavbarBookmarks'
 
-const ThemeNavbar = props => {
+const ThemeNavbar = (props) => {
   // ** Props
-  const { skin, setSkin } = props
+  const { skin, setSkin, setMenuVisibility } = props
 
   // ** Function to toggle Theme (Light/Dark)
   // const ThemeToggler = () => {
@@ -19,13 +20,9 @@ const ThemeNavbar = props => {
 
   return (
     <Fragment>
-      {/* <div className='bookmark-wrapper d-flex align-items-center'>
-        <NavItem className='d-none d-lg-block'>
-          <NavLink className='nav-link-style'>
-            <ThemeToggler />
-          </NavLink>
-        </NavItem>
-      </div> */}
+      <div className="bookmark-wrapper d-flex align-items-center">
+        <NavbarBookmarks setMenuVisibility={setMenuVisibility} />
+      </div>
       <NavbarUser skin={skin} setSkin={setSkin} />
     </Fragment>
   )

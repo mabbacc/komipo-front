@@ -18,7 +18,7 @@ const UserDropdown = () => {
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
       <DropdownToggle href='/' tag='a' className='nav-link dropdown-user-link' onClick={e => e.preventDefault()}>
         <div className='user-nav d-sm-flex d-none'>
-          <span className='user-name fw-bold'>John Doe</span>
+          <span className='user-name fw-bold'>KOMIPO</span>
           <span className='user-status'>Admin</span>
         </div>
         <Avatar img={defaultAvatar} imgHeight='40' imgWidth='40' status='online' />
