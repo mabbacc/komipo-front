@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
+import A4aWaterfall from "./graphs/A4aWaterfall"
 
 const A4WaterfallMAP = () => {
     return (
@@ -15,12 +16,12 @@ const A4WaterfallMAP = () => {
             <Row>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>Waterfall 1</CardBody>
+                       <A4aWaterfall /> 
                     </Card>
                 </Col>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>2D Color Map</CardBody>
+                        <CardBody style={{height: '620px'}}>2D Color Map</CardBody>
                     </Card>
                 </Col>
             </Row>

@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Col, Row } from 'reactstrap'
 import Chart from 'react-apexcharts'
-import { generateDayWiseTimeSeries } from '../../../utility/Utils'
+import { generateDayWiseTimeSeries } from '@utils'
 
 const ComparativeTrendChart = () => {
   const [grdata, setGrdata] = useState([])
