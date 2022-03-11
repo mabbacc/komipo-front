@@ -33,7 +33,7 @@ import { useNavbarColor } from '@hooks/useNavbarColor'
 // ** Styles
 import '@styles/base/core/menu/menu-types/horizontal-menu.scss'
 
-const HorizontalLayout = props => {
+const HorizontalLayout = (props) => {
   // ** Props
   const { children, navbar, menuData, footer, menu, currentActiveItem, routerProps, setLastLayout } = props
 
@@ -50,17 +50,17 @@ const HorizontalLayout = props => {
 
   // ** Store Vars
   const dispatch = useDispatch()
-  const layoutStore = useSelector(state => state.layout)
+  const layoutStore = useSelector((state) => state.layout)
 
   // ** Vars
   const contentWidth = layoutStore.contentWidth
   const isHidden = layoutStore.menuHidden
 
   // ** Handles Content Width
-  const setContentWidth = val => dispatch(handleContentWidth(val))
+  const setContentWidth = (val) => dispatch(handleContentWidth(val))
 
   // ** Handles Content Width
-  const setIsHidden = val => dispatch(handleMenuHidden(val))
+  const setIsHidden = (val) => dispatch(handleMenuHidden(val))
 
   // ** UseEffect Cleanup
   const cleanup = () => {
@@ -116,42 +116,43 @@ const HorizontalLayout = props => {
       {...(isHidden ? { 'data-col': '1-column' } : {})}
     >
       <Navbar
-        expand='lg'
+        expand="lg"
         container={false}
         className={classnames('header-navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center', {
           'navbar-scrolled': navbarScrolled
         })}
       >
         {!navbar && (
-          <div className='navbar-header d-xl-block d-none'>
-            <ul className='nav navbar-nav'>
+          <div className="navbar-header d-xl-block d-none">
+            <ul className="nav navbar-nav">
               <NavItem>
-                <Link to='/' className='navbar-brand'>
-                  <span className='brand-logo'>
-                    <img src={themeConfig.app.appLogoImage} alt='logo' />
-                  </span>
-                  <h2 className='brand-text mb-0'>{themeConfig.app.appName}</h2>
+                <Link to="/" className="navbar-brand">
+                  {/* <span className="brand-logo">
+                    <img src={themeConfig.app.appLogoImage} alt="logo" />
+                  </span> */}
+                  <h2 className="brand-text mb-0">{themeConfig.app.appName}</h2>
                 </Link>
               </NavItem>
             </ul>
           </div>
         )}
 
-        <div className='navbar-container d-flex content'>
+        <div className="navbar-container d-flex content">
           {navbar ? navbar({ skin, setSkin }) : <NavbarComponent skin={skin} setSkin={setSkin} />}
         </div>
       </Navbar>
       {!isHidden ? (
-        <div className='horizontal-menu-wrapper'>
+        <div className="horizontal-menu-wrapper">
           <Navbar
-            tag='div'
-            expand='sm'
+            tag="div"
+            expand="sm"
             light={skin !== 'dark'}
             dark={skin === 'dark' || bgColorCondition}
             className={classnames(`header-navbar navbar-horizontal navbar-shadow menu-border`, {
               [navbarClasses[navbarType]]: navbarType !== 'static',
               'floating-nav': (!navbarClasses[navbarType] && navbarType !== 'static') || navbarType === 'floating'
             })}
+            style={{ backgroundColor: '#cacaca' }}
           >
             {menu ? (
               menu({ menuData, routerProps, currentActiveItem })
@@ -196,9 +197,9 @@ const HorizontalLayout = props => {
       </footer>
 
       {themeConfig.layout.scrollTop === true ? (
-        <div className='scroll-to-top'>
-          <ScrollToTop showOffset={300} className='scroll-top d-block'>
-            <Button className='btn-icon' color='primary'>
+        <div className="scroll-to-top">
+          <ScrollToTop showOffset={300} className="scroll-top d-block">
+            <Button className="btn-icon" color="primary">
               <ArrowUp size={14} />
             </Button>
           </ScrollToTop>

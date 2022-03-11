@@ -3,8 +3,8 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'Predictive Diagnosis Monitoring System for Integrated V.M.S',
+    appLogoImage: require('@src/assets/images/logo/img_ci_info02.png').default
   },
   layout: {
     isRTL: false,

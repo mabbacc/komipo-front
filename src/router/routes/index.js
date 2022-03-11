@@ -33,6 +33,7 @@ const Routes = [
   {
     path: '/dashboard',
     component: lazy(() => import('../../views/dashboard')),
+    layout: 'HorizontalLayout',
     meta: {
       resource: 'Auth',
       action: 'read'
@@ -41,6 +42,7 @@ const Routes = [
   {
     path: '/subboard',
     component: lazy(() => import('../../views/subboard')),
+    layout: 'HorizontalLayout',
     meta: {
       resource: 'Auth',
       action: 'read'
@@ -49,6 +51,7 @@ const Routes = [
   {
     path: '/detailmachine',
     component: lazy(() => import('../../views/detailmachine')),
+    layout: 'HorizontalLayout',
     meta: {
       resource: 'Auth',
       action: 'read'
