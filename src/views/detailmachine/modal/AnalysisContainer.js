@@ -5,6 +5,8 @@ import A1MultiTrace from "./component/A1MultiTrace"
 import A2OrbitWaveform from './component/A2OrbitWaveform'
 import A3Spectrum from "./component/A3Spectrum"
 import A4WaterfallMAP from "./component/A4WaterfallMAP"
+import A5DiagnosisResult from "./component/A5DiagnosisResult"
+import A6Statistic from "./component/A6Statistic"
 
 
 const AnalysisContainer = (props) => {
@@ -118,10 +120,10 @@ const AnalysisContainer = (props) => {
                         <A4WaterfallMAP />
                     </TabPane>
                     <TabPane tabId='6'>
-                        6666
+                        <A5DiagnosisResult />
                     </TabPane>
                     <TabPane tabId='7'>
-                        7777
+                        <A6Statistic />
                     </TabPane>
                 </TabContent>
             </ModalBody>

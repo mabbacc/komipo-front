@@ -18,7 +18,8 @@ const R1MachineList = () => {
 
     const selectOption = [ 
         { value: 'PAF', label: '보일러 설비 통풍계통 PAF(Primary Air Fan)'},
-        { value: 'PAF-A', label: 'PAF - A'}
+        { value: 'PAF-A', label: 'PAF - A'},
+        { value: 'Motor Outboard', label: 'Motor Outboard'}
     ]
 
     const closeModal = () => {
@@ -43,22 +44,23 @@ const R1MachineList = () => {
                             >
                             Home</Button.Ripple>
                         </Col>
-                        <Col className='col-4'>
+                        <Col xl='4'>
                             <Select 
                                 defaultValue={selectOption[0]}
                             />
                         </Col>
-                        <Col className='col-2'>
+                        <Col xl='2'>
                             <Select 
                                 defaultValue={selectOption[1]}
                             />
                         </Col>
-                        <Col className='col-2'>
+                        <Col xl='2'>
                             <Select 
-                                defaultValue={selectOption[1]}
+                                defaultValue={selectOption[2]}
                             />
                         </Col>
-                        <Col className='col-2 d-flex'>
+                        <Col xl='1' />
+                        <Col xl='2'>
                             <Button.Ripple
                                 color={'primary'}
                                 block

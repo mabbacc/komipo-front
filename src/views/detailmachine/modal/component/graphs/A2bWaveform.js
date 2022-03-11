@@ -1,9 +1,8 @@
 import { Fragment } from "react"
-import { Col, Row } from "reactstrap"
+import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
 
-
-const ComparativeTrendChart = () => {   
+const A2bWaveform = () => {
     const options = {
         series: [
             {
@@ -38,21 +37,35 @@ const ComparativeTrendChart = () => {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
         }
       }
-      return (
-          <Fragment>
+    return (
+        <Fragment>
+            
+
             <Row>
                 <Col>
-                    <Chart
-                        options={options}
-                        series={options.series}
-                        type="line"
-                        height="200"
-                        width='100%'
-                    />
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Waveform 1</CardTitle>
+                        </CardHeader>
+                        <CardBody>
+                            <Row>
+                                <Col>
+                                    <Chart
+                                        options={options}
+                                        series={options.series}
+                                        type="line"
+                                        height="500"
+                                        width='100%'
+                                    />
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
                 </Col>
             </Row>
+
         </Fragment>
     )
 }
 
-export default ComparativeTrendChart
+export default A2bWaveform
