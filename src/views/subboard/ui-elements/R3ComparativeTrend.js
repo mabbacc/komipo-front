@@ -9,9 +9,8 @@ import moment from 'moment'
 
 
 const R3ComparativeTrend = () => {
-    //eslint-disable-next-line
-    const [startDate, setStartDate] = useState({})
-    const [endDate, setEndDate] = useState({})
+    const [startDate, setStartDate] = useState([])
+    const [endDate, setEndDate] = useState([new Date()])
     
     const selectOption = [ 
         { value: '1 Week', label: '1 Week'},
@@ -19,32 +18,39 @@ const R3ComparativeTrend = () => {
         { value: '3 Month', label: '3 Month'},
         { value: '6 Month', label: '6 Month'}
     ]
+    //eslint-disable-next-line
+    const [selected, setSelected] = useState("")
     
 
     const clickCurrent = () => {
         setStartDate(new Date())
     }
 
-    const changeValue = () => { 
-        const today = moment(endDate[0]).subtract(6, 'months')
-
-        console.log(today)
-        console.log(today._d)
-
-        
-        if (selectOption[0].value === '1 Week') {
+    const changeValue = (e) => { 
+        if (e.value === '1 Week') {
             setStartDate(moment(endDate[0]).subtract(7, 'days'))
+            setSelected(selectOption[0])
             //setStartDate(endDate[0].getTime() - (7 * 24 * 60 * 60 * 1000))
-        } 
-        if (selectOption[1].value === '1 Month') {
+        } else if (e.value === '1 Month') {
             setStartDate(moment(endDate[0]).subtract(1, 'months'))
-        }
-        if (selectOption[2].value === '3 Month') {
+            setSelected(selectOption[1])
+        } else if (e.value === '3 Month') {
             setStartDate(moment(endDate[0]).subtract(3, 'months'))
-        }
-        if (selectOption[3].value === '6 months') {
+            setSelected(selectOption[2])
+        } else if (e.value === '6 Month') {
             setStartDate(moment(endDate[0]).subtract(6, 'months'))
+            setSelected(selectOption[3])
         }
+        // if (selectOption[1].value === '1 Month') {
+        //     setStartDate(moment(endDate[0]).subtract(1, 'months'))
+        //     console.log(selectOption)
+        // }
+        // if (selectOption[2].value === '3 Month') {
+        //     setStartDate(moment(endDate[0]).subtract(3, 'months'))
+        // }
+        // if (selectOption[3].value === '6 Month') {
+        //     setStartDate(moment(endDate[0]).subtract(6, 'months'))
+        // }
     }
 
     return (
@@ -133,10 +139,14 @@ const R3ComparativeTrend = () => {
                                 </Col> */}
                                 <Col xl='2'>
                                     <Select 
+                                        className = 'react-select'
+                                        classNamePrefix = 'select'
                                         options = {selectOption}
                                         menuPlacement = 'auto'
-                                        onChange = {() => changeValue()}
-                                    />
+                                        onChange = {changeValue}
+                                        value = {selected}
+                                    >
+                                    </Select>
                                 </Col>
                                 <Col xl='1'>
                                     <Button.Ripple color='primary'>Search</Button.Ripple>
