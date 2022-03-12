@@ -17,12 +17,11 @@ const A3aSpectrumPlot = () => {
 
     const options = {
         series: [
-            {
-                name: 'Desktops',
-                data: grdata
-              }
+          {
+            name: 'Desktops',
+            data: grdata
+          }
         ],
-        options: {
           chart: {
             id: 'chart2',
             type: 'line',
@@ -48,14 +47,13 @@ const A3aSpectrumPlot = () => {
             tickAmount: 5,
     
             title: {
-              text: 'Frequency [Hz]'
+              text: 'Frequency[Hz]'
             }
           },
           yaxis: {
             title: {
-              text: 'Velocity [mm/s r.m.s.]'
+              text: 'Amplitude[μm]'
             }
-          }
         }
       }
     return (

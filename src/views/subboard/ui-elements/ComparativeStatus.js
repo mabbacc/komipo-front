@@ -53,7 +53,7 @@ const ComparativeStatus = () => {
                     options={options}
                     series={options.series}
                     type="bar"
-                    height="250"
+                    height="230"
                 />
                 </Col>
             </Row>

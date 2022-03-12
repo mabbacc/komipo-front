@@ -13,7 +13,7 @@ const R2DetailMachine = () => {
             <Row className='match-height'>
                 <Col xl='4'>
                     <Card>
-                        <CardBody style={{height: '600px'}}>
+                        <CardBody style={{height: '500px'}}>
                             <CardTitle tag='h5'>Detail Machine Overall</CardTitle>
                         </CardBody>
                     </Card>

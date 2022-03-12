@@ -16,48 +16,46 @@ const A3bSpectrumPlot = () => {
     }, [])
 
     const options = {
-        series: [
-            {
-                name: 'Desktops',
-                data: grdata
-              }
-        ],
-        options: {
-          chart: {
-            id: 'chart2',
-            type: 'line',
-            stacked: false,
-            height: 300,
-            foreColor: '#B4B7BD',
-            zoom: {
-              enabled: true
-            }
-          },
-          colors: ['#546E7A'],
-          stroke: {
-            width: 2
-          },
-          dataLabels: {
-            enabled: false
-          },
-          markers: {
-            size: 0
-          },
-          xaxis: {
-            type: 'numeric',
-            tickAmount: 5,
-    
-            title: {
-              text: 'Frequency [Hz]'
-            }
-          },
-          yaxis: {
-            title: {
-              text: 'Velocity [mm/s r.m.s.]'
-            }
-          }
+      series: [
+        {
+          name: 'Desktops',
+          data: grdata
         }
+      ],
+        chart: {
+          id: 'chart2',
+          type: 'line',
+          stacked: false,
+          height: 300,
+          foreColor: '#B4B7BD',
+          zoom: {
+            enabled: true
+          }
+        },
+        colors: ['#546E7A'],
+        stroke: {
+          width: 2
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          type: 'numeric',
+          tickAmount: 5,
+  
+          title: {
+            text: 'Frequency[Hz]'
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Amplitude[μm]'
+          }
       }
+    }
     return (
         <Fragment>
             

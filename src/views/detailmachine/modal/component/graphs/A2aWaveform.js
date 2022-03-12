@@ -4,59 +4,57 @@ import Chart from 'react-apexcharts'
 import { generateDayWiseTimeSeries } from '@utils'
 
 const A2aWaveform = () => {
-    const [grdata, setGrdata] = useState([])
+  const [grdata, setGrdata] = useState([])
 
-    useEffect(() => {
-      setGrdata(
-        generateDayWiseTimeSeries(new Date('01 Jan 2022').getTime(), 185, {
-          min: 30,
-          max: 90
-        })
-      )
-    }, [])
-
-    const options = {
+  useEffect(() => {
+    setGrdata(
+      generateDayWiseTimeSeries(new Date('01 Jan 2022').getTime(), 185, {
+        min: 30,
+        max: 90
+      })
+    )
+  }, [])
+      const options = {
         series: [
-            {
-                name: 'Desktops',
-                data: grdata
-              }
-        ],
-        options: {
-          chart: {
-            id: 'chart2',
-            type: 'line',
-            height: 400,
-            foreColor: '#B4B7BD',
-            toolbar: {
-              show: true,
-              offsetX: -50,
-              autoSelected: 'zoom',
-              tools: {
-                download: false,
-                selection: true,
-                zoom: true,
-                zoomin: true,
-                zoomout: true,
-                pan: true,
-                customIcons: []
-              }
-            }
-          },
-          colors: ['#546E7A'],
-          stroke: {
-            width: 1
-          },
-          dataLabels: {
-            enabled: false
-          },
-          fill: {
-            opacity: 1
-          },
-          markers: {
-            size: 0
+          {
+            name: 'Desktops',
+            data: grdata
           }
-        }
+        ],
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        colors: ['#546E7A'],
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'straight',
+          width: 2
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          type: 'numeric',
+          tickAmount: 5,
+  
+          title: {
+            text: 'Time[ms]'
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Displacement[μm]'
+          }
+      }
       }
     return (
         <Fragment>

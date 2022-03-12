@@ -4,13 +4,16 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { Fragment, useState } from "react"
 import { Col, Row, Card, CardBody, CardTitle, Button } from "reactstrap"
 import ComparativeTrendChart from "./ComparativeTrendChart"
+import { TiMediaPlayReverseOutline, TiMediaPlayOutline, TiMediaFastForwardOutline, TiMediaRewindOutline } from "react-icons/ti"
 import Select from 'react-select'
 import moment from 'moment'
+import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from 'react-feather'
 
 
 const R3ComparativeTrend = () => {
     const [startDate, setStartDate] = useState([])
     const [endDate, setEndDate] = useState([new Date()])
+    const [selected, setSelected] = useState("")
     
     const selectOption = [ 
         { value: '1 Week', label: '1 Week'},
@@ -18,19 +21,16 @@ const R3ComparativeTrend = () => {
         { value: '3 Month', label: '3 Month'},
         { value: '6 Month', label: '6 Month'}
     ]
-    //eslint-disable-next-line
-    const [selected, setSelected] = useState("")
-    
-
+  
     const clickCurrent = () => {
         setStartDate(new Date())
+        setEndDate(new Date())
     }
 
     const changeValue = (e) => { 
         if (e.value === '1 Week') {
             setStartDate(moment(endDate[0]).subtract(7, 'days'))
             setSelected(selectOption[0])
-            //setStartDate(endDate[0].getTime() - (7 * 24 * 60 * 60 * 1000))
         } else if (e.value === '1 Month') {
             setStartDate(moment(endDate[0]).subtract(1, 'months'))
             setSelected(selectOption[1])
@@ -41,16 +41,6 @@ const R3ComparativeTrend = () => {
             setStartDate(moment(endDate[0]).subtract(6, 'months'))
             setSelected(selectOption[3])
         }
-        // if (selectOption[1].value === '1 Month') {
-        //     setStartDate(moment(endDate[0]).subtract(1, 'months'))
-        //     console.log(selectOption)
-        // }
-        // if (selectOption[2].value === '3 Month') {
-        //     setStartDate(moment(endDate[0]).subtract(3, 'months'))
-        // }
-        // if (selectOption[3].value === '6 Month') {
-        //     setStartDate(moment(endDate[0]).subtract(6, 'months'))
-        // }
     }
 
     return (
@@ -69,6 +59,7 @@ const R3ComparativeTrend = () => {
                     <Card>
                         <CardBody>
                             <Row>
+                                <Col xl='1'></Col>
                                 {/* <Col xl='1'>
                                 <Flatpickr
                                     placeholder="Calendar"
@@ -85,14 +76,17 @@ const R3ComparativeTrend = () => {
                                     }}
                                 />
                                 </Col> */}
-                                
+                                <Col xl='1' style={{textAlignLast: 'right', alignSelf: 'center'}}>
+                                    <ChevronsLeft size={35} className='cursor-pointer'/>
+                                    <ChevronLeft size={35} className='cursor-pointer'/>
+                                </Col>
                                 <Col xl='2'>
                                 <Flatpickr
                                     className="form-control"
                                     value={startDate._d}
                                     placeholder="Start Date"
                                     onChange={(date) => {
-                                            return setStartDate(date)
+                                        return setStartDate(date)
                                     }}
                                     id="default-picker"
                                     style={{ textAlign: 'center'}}
@@ -113,11 +107,12 @@ const R3ComparativeTrend = () => {
                                     value={endDate}
                                     placeholder="End Date"
                                     onChange={(date) => {
-                                            return setEndDate(date)
+                                        return setEndDate(date)
                                     }}
                                     id="default-picker"
                                     style={{ textAlign: 'center'}}
                                     options={{
+                                        // maxDate: 'today',
                                         enableTime: true,
                                         allowInput: true
                                         //mode: 'range'
@@ -127,16 +122,15 @@ const R3ComparativeTrend = () => {
                                     }}
                                 /> 
                                 </Col>
-                                
                                 {/* <Col xl='2'>
                                 <input 
-                                    // value={endDate}
-                                    placeholder="End Date"
-                                    style={{ textAlign: 'center'}}
-                                    id="secondRangeInput"
-                                    className="form-control" />
+                                // value={endDate}
+                                placeholder="End Date"
+                                style={{ textAlign: 'center'}}
+                                id="secondRangeInput"
+                                className="form-control" />
                                 
-                                </Col> */}
+                            </Col> */}
                                 <Col xl='2'>
                                     <Select 
                                         className = 'react-select'
@@ -148,11 +142,19 @@ const R3ComparativeTrend = () => {
                                     >
                                     </Select>
                                 </Col>
-                                <Col xl='1'>
-                                    <Button.Ripple color='primary'>Search</Button.Ripple>
+                                <Col xl='1' style={{ alignSelf: 'center' }}>
+                                    <ChevronRight size={35} className='cursor-pointer' />
+                                    <ChevronsRight size={35} className='cursor-pointer' />
                                 </Col>
                                 <Col xl='1'>
-                                    <Button.Ripple color='primary' onClick={() => clickCurrent()}>Current</Button.Ripple>
+                                    <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Search</Button.Ripple>
+                                </Col>
+                                <Col xl='1'>
+                                    <Button.Ripple 
+                                        color='primary' 
+                                        onClick={() => clickCurrent()} 
+                                        style={{inlineSize: '-webkit-fill-available'}}
+                                    >Current</Button.Ripple>
                                 </Col>
                             </Row>
                         </CardBody>

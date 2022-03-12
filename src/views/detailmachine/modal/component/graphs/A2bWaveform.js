@@ -16,57 +16,54 @@ const A2bWaveform = () => {
     }, [])
 
     const options = {
-        series: [
-            {
-                name: 'Desktops',
-                data: grdata
-              }
-        ],
-        options: {
-          chart: {
-            id: 'chart2',
-            type: 'line',
-            height: 400,
-            foreColor: '#B4B7BD',
-            toolbar: {
-              show: true,
-              offsetX: -50,
-              autoSelected: 'zoom',
-              tools: {
-                download: false,
-                selection: true,
-                zoom: true,
-                zoomin: true,
-                zoomout: true,
-                pan: true,
-                customIcons: []
-              }
-            }
-          },
-          colors: ['#546E7A'],
-          stroke: {
-            width: 1
-          },
-          dataLabels: {
-            enabled: false
-          },
-          fill: {
-            opacity: 1
-          },
-          markers: {
-            size: 0
-          }
+      series: [
+        {
+          name: 'Desktops',
+          data: grdata
         }
-      }
+      ],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      colors: ['#546E7A'],
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight',
+        width: 2
+      },
+      dataLabels: {
+        enabled: false
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'numeric',
+        tickAmount: 5,
+
+        title: {
+          text: 'Time[ms]'
+        }
+      },
+      yaxis: {
+        title: {
+          text: 'Displacement[μm]'
+        }
+    }
+    }
     return (
         <Fragment>
-            
-
             <Row>
                 <Col>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Waveform 1</CardTitle>
+                            <CardTitle>Waveform 2</CardTitle>
                         </CardHeader>
                         <CardBody>
                             <Row>
@@ -84,7 +81,6 @@ const A2bWaveform = () => {
                     </Card>
                 </Col>
             </Row>
-
         </Fragment>
     )
 }

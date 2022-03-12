@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, CardTitle, Table } from "reactstrap"
 const Summary = () => {
     return (
         <Fragment>
-            <Card style={{height: '400px', overflowX: 'hidden', overflowY: 'auto'}}>
+            <Card style={{height: '300px', overflowX: 'hidden', overflowY: 'auto'}}>
                 <CardBody style={{position: 'sticky', top: '0'}}>
                     {/* <CardTitle tag='h6' style={{textAlign: 'center'}}>Summary</CardTitle> */}
                     <Table bordered>

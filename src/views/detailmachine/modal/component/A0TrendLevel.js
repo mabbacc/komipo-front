@@ -39,7 +39,8 @@ const A0TrendLevel = () => {
             enabled: false
         },
         stroke: {
-            curve: 'straight'
+            curve: 'straight',
+            width: 2
         },
         title: {
             text: 'Product Trends by Month',
