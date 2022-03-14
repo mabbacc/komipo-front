@@ -26,6 +26,12 @@ const A1bParameterTrend = () => {
         type: 'line',
         zoom: {
           enabled: false
+        },
+        toolbar: {
+          show: true,
+          tools:{
+            download:false 
+          }
         }
       },
       dataLabels: {
@@ -35,10 +41,10 @@ const A1bParameterTrend = () => {
         curve: 'straight',
         width: 2
       },
-      title: {
-        text: 'Product Trends by Month',
-        align: 'left'
-      },
+      // title: {
+      //   text: 'Product Trends by Month',
+      //   align: 'left'
+      // },
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -47,6 +53,11 @@ const A1bParameterTrend = () => {
       },
       xaxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+      },
+      yaxis: {
+        title: {
+          text: 'Phase in degrees'
+        }
       }
     }
     return (
@@ -59,7 +70,7 @@ const A1bParameterTrend = () => {
                         <CardHeader>
                             <CardTitle>위상 Parameter Trend</CardTitle>
                         </CardHeader>
-                        <CardBody>
+                        <CardBody style={{ height: '200px' }}>
                             <Row>
                                 <Col>
                                     <Chart

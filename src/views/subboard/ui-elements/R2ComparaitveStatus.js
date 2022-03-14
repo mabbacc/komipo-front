@@ -10,7 +10,7 @@ const R2ComparaitveStatus = () => {
                 <Col xl='6'>
                     <Card>
                         <CardBody style={{height: '315px'}}>
-                            <CardTitle tag='h6' style={{textAlign: 'center'}}>Comparative status(current)</CardTitle>
+                            <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Comparative status(current)</CardTitle>
                             <ComparativeStatus />
                         </CardBody>
                     </Card>
@@ -19,7 +19,7 @@ const R2ComparaitveStatus = () => {
                 <Col xl='6'>
                     <Card>
                         <CardBody style={{height: '315px'}}>
-                            <CardTitle tag='h6' style={{textAlign: 'center'}}>Alarm history table (Report 기능 포함)</CardTitle>
+                            <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Alarm history table (Report 기능 포함)</CardTitle>
                         </CardBody>
                     </Card>
                     {/* Alarm History table */}

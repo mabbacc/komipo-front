@@ -11,17 +11,30 @@ const FaultyTendency = () => {
         data: [80, 50, 30, 40, 100, 20]
       }
     ],
-        chart: {
+    chart: {
         height: 350,
-        type: 'radar'
+        type: 'radar',
+        toolbar: {
+          show: true,
+          tools:{
+            download:false 
+          }
+        }
       },
- 
-      xaxis: {
+    stroke: {
+        show: true,
+        width: 2,
+        colors: [],
+        dashArray: 0
+      },
+    xaxis: {
         categories: ['January', 'February', 'March', 'April', 'May', 'June']
       }
-      }
-      return (
-          <Fragment>
+    }
+
+    
+    return (
+        <Fragment>
             <Row>
                 <Col>
                     <Chart

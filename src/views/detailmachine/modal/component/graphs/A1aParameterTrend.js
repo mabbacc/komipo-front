@@ -26,6 +26,12 @@ const A1aParameterTrend = () => {
         type: 'line',
         zoom: {
           enabled: false
+        },
+        toolbar: {
+          show: true,
+          tools:{
+            download:false 
+          }
         }
       },
       dataLabels: {
@@ -35,10 +41,10 @@ const A1aParameterTrend = () => {
         curve: 'straight',
         width: 2
       },
-      title: {
-        text: 'Product Trends by Month',
-        align: 'left'
-      },
+      // title: {
+      //   text: 'Product Trends by Month',
+      //   align: 'left'
+      // },
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -51,15 +57,13 @@ const A1aParameterTrend = () => {
     }
     return (
         <Fragment>
-            
-
             <Row>
                 <Col>
                     <Card>
                         <CardHeader>
                             <CardTitle>Parameter Trend</CardTitle>
                         </CardHeader>
-                        <CardBody>
+                        <CardBody style={{ height: '200px' }}>
                             <Row>
                                 <Col>
                                     <Chart

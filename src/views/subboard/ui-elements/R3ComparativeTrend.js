@@ -1,45 +1,75 @@
 import Flatpickr from 'react-flatpickr'
-//import rangePlugin from 'flatpickr/dist/plugins/rangePlugin'
+// import rangePlugin from 'flatpickr/dist/plugins/rangePlugin'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import { Fragment, useState } from "react"
 import { Col, Row, Card, CardBody, CardTitle, Button } from "reactstrap"
 import ComparativeTrendChart from "./ComparativeTrendChart"
-import { TiMediaPlayReverseOutline, TiMediaPlayOutline, TiMediaFastForwardOutline, TiMediaRewindOutline } from "react-icons/ti"
 import Select from 'react-select'
 import moment from 'moment'
-import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from 'react-feather'
-
+// import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from 'react-feather'
+import { BiRightArrow, BiLeftArrow } from 'react-icons/bi'
 
 const R3ComparativeTrend = () => {
-    const [startDate, setStartDate] = useState([])
-    const [endDate, setEndDate] = useState([new Date()])
-    const [selected, setSelected] = useState("")
-    
+    const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
+    const [endDate, setEndDate] = useState(moment(new Date()))
     const selectOption = [ 
         { value: '1 Week', label: '1 Week'},
         { value: '1 Month', label: '1 Month'},
         { value: '3 Month', label: '3 Month'},
         { value: '6 Month', label: '6 Month'}
     ]
+    const [selected, setSelected] = useState(selectOption[0])
   
     const clickCurrent = () => {
-        setStartDate(new Date())
-        setEndDate(new Date())
+        setStartDate(moment(new Date()))
+        setEndDate(moment(new Date()))
     }
 
     const changeValue = (e) => { 
         if (e.value === '1 Week') {
-            setStartDate(moment(endDate[0]).subtract(7, 'days'))
+            setStartDate(moment(endDate._d).subtract(7, 'days'))
             setSelected(selectOption[0])
         } else if (e.value === '1 Month') {
-            setStartDate(moment(endDate[0]).subtract(1, 'months'))
+            setStartDate(moment(endDate._d).subtract(1, 'months'))
             setSelected(selectOption[1])
         } else if (e.value === '3 Month') {
-            setStartDate(moment(endDate[0]).subtract(3, 'months'))
+            setStartDate(moment(endDate._d).subtract(3, 'months'))
             setSelected(selectOption[2])
         } else if (e.value === '6 Month') {
-            setStartDate(moment(endDate[0]).subtract(6, 'months'))
+            setStartDate(moment(endDate._d).subtract(6, 'months'))
             setSelected(selectOption[3])
+        }
+    }
+
+    const clickLeft = () => {
+        if (selected.value === '1 Week') {
+            setStartDate(moment(startDate._d).subtract(7, 'days'))
+            setEndDate(moment(endDate._d).subtract(7, 'days'))
+        } else if (selected.value === '1 Month') {
+            setStartDate(moment(startDate._d).subtract(1, 'months'))
+            setEndDate(moment(endDate._d).subtract(1, 'months'))
+        } else if (selected.value === '3 Month') {
+            setStartDate(moment(startDate._d).subtract(3, 'months'))
+            setEndDate(moment(endDate._d).subtract(3, 'months'))
+        } else if (selected.value === '6 Month') {
+            setStartDate(moment(startDate._d).subtract(6, 'months'))
+            setEndDate(moment(endDate._d).subtract(6, 'months'))
+        }
+    }
+
+    const clickRight = () => {
+        if (selected.value === '1 Week') {
+            setStartDate(moment(startDate._d).add(7, 'days'))
+            setEndDate(moment(endDate._d).add(7, 'days'))
+        } else if (selected.value === '1 Month') {
+            setStartDate(moment(startDate._d).add(1, 'months'))
+            setEndDate(moment(endDate._d).add(1, 'months'))
+        } else if (selected.value === '3 Month') {
+            setStartDate(moment(startDate._d).add(3, 'months'))
+            setEndDate(moment(endDate._d).add(3, 'months'))
+        } else if (selected.value === '6 Month') {
+            setStartDate(moment(startDate._d).add(6, 'months'))
+            setEndDate(moment(endDate._d).add(6, 'months'))
         }
     }
 
@@ -48,8 +78,8 @@ const R3ComparativeTrend = () => {
             <Row>
                 <Col xl='12'>
                     <Card>
-                        <CardBody style={{height: '300px'}}>
-                            <CardTitle tag='h6' style={{textAlign: 'center'}}>Comparative Trend</CardTitle>
+                        <CardBody style={{height: '280px'}}>
+                            <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Comparative Trend</CardTitle>
                             <ComparativeTrendChart />
                         </CardBody>
                     </Card>
@@ -59,79 +89,77 @@ const R3ComparativeTrend = () => {
                     <Card>
                         <CardBody>
                             <Row>
-                                <Col xl='1'></Col>
                                 {/* <Col xl='1'>
                                 <Flatpickr
-                                    placeholder="Calendar"
-                                    className="form-control"
-                                    value={picker}
-                                    onChange={(date) => {
-                                        return setPicker(date)
-                                    }}
-                                    id="range-picker"
-                                    options={{
-                                        enableTime: true,
-                                        allowInput: true
-                                        //mode: 'range'
-                                    }}
+                                placeholder="Calendar"
+                                className="form-control"
+                                value={picker}
+                                onChange={(date) => {
+                                    return setPicker(date)
+                                }}
+                                id="range-picker"
+                                options={{
+                                    enableTime: true,
+                                    allowInput: true
+                                    //mode: 'range'
+                                }}
                                 />
-                                </Col> */}
-                                <Col xl='1' style={{textAlignLast: 'right', alignSelf: 'center'}}>
-                                    <ChevronsLeft size={35} className='cursor-pointer'/>
-                                    <ChevronLeft size={35} className='cursor-pointer'/>
+                            </Col> */}
+                                <Col xl='2'></Col>
+                                <Col xl='1' style={{ textAlignLast: 'right', alignSelf: 'center' }}>
+                                    {/* <ChevronsLeft size={35} className='cursor-pointer'/> */}
+                                    <BiLeftArrow size={35} className='cursor-pointer' onClick={() => clickLeft()} />
                                 </Col>
                                 <Col xl='2'>
-                                <Flatpickr
-                                    className="form-control"
-                                    value={startDate._d}
-                                    placeholder="Start Date"
-                                    onChange={(date) => {
-                                        return setStartDate(date)
-                                    }}
-                                    id="default-picker"
-                                    style={{ textAlign: 'center'}}
-                                    options={{
-                                        enableTime: true,
-                                        allowInput: true
-                                        //mode: 'range'
-                                        //plugins: [new rangePlugin({ input: '#secondRangeInput' })]
-                                        
-                                        // conjunction: ' - '
-                                    }}
-                                /> 
+                                    <Flatpickr
+                                        className="form-control"
+                                        value={startDate._d}
+                                        placeholder="Start Date"
+                                        onChange={(date) => {
+                                            return setStartDate(date)
+                                        }}
+                                        id="default-picker"
+                                        style={{ textAlign: 'center'}}
+                                        options={{
+                                            //maxDate: new Date(),
+                                            enableTime: true,
+                                            allowInput: true
+                                            //mode: 'range'
+                                            //plugins: [new rangePlugin({ input: '#secondRangeInput' })]
+                                            // conjunction: ' - '
+                                        }}
+                                    /> 
                                 </Col>
                                 <span style={{ width: '0', alignSelf: 'center'}}>~</span>
                                 <Col xl='2'>
-                                <Flatpickr
-                                    className="form-control"
-                                    value={endDate}
-                                    placeholder="End Date"
-                                    onChange={(date) => {
-                                        return setEndDate(date)
-                                    }}
-                                    id="default-picker"
-                                    style={{ textAlign: 'center'}}
-                                    options={{
-                                        // maxDate: 'today',
-                                        enableTime: true,
-                                        allowInput: true
-                                        //mode: 'range'
-                                        //plugins: [new rangePlugin({ input: '#secondRangeInput' })]
-                                        
-                                        // conjunction: ' - '
-                                    }}
-                                /> 
+                                    <Flatpickr
+                                        className="form-control"
+                                        value={endDate._d}
+                                        placeholder="End Date"
+                                        onChange={(date) => {
+                                            return setEndDate(date)
+                                        }}
+                                        id="default-picker"
+                                        style={{ textAlign: 'center'}}
+                                        options={{
+                                            //maxDate: new Date(),
+                                            enableTime: true,
+                                            allowInput: true
+                                            //mode: 'range'
+                                            //plugins: [new rangePlugin({ input: '#secondRangeInput' })]
+                                            // conjunction: ' - '
+                                        }}
+                                    /> 
                                 </Col>
                                 {/* <Col xl='2'>
-                                <input 
-                                // value={endDate}
-                                placeholder="End Date"
-                                style={{ textAlign: 'center'}}
-                                id="secondRangeInput"
-                                className="form-control" />
-                                
-                            </Col> */}
-                                <Col xl='2'>
+                                    <input 
+                                    // value={endDate}
+                                    placeholder="End Date"
+                                    style={{ textAlign: 'center'}}
+                                    id="secondRangeInput"
+                                    className="form-control" />
+                                </Col> */}
+                                <Col xl='1'>
                                     <Select 
                                         className = 'react-select'
                                         classNamePrefix = 'select'
@@ -143,9 +171,10 @@ const R3ComparativeTrend = () => {
                                     </Select>
                                 </Col>
                                 <Col xl='1' style={{ alignSelf: 'center' }}>
-                                    <ChevronRight size={35} className='cursor-pointer' />
-                                    <ChevronsRight size={35} className='cursor-pointer' />
+                                    <BiRightArrow size={35} className='cursor-pointer' onClick={() => clickRight()} />
+                                    {/* <ChevronsRight size={35} className='cursor-pointer' /> */}
                                 </Col>
+                                
                                 <Col xl='1'>
                                     <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Search</Button.Ripple>
                                 </Col>

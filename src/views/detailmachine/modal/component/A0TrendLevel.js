@@ -3,14 +3,12 @@ import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
 import Select from 'react-select'
 import { generateDayWiseTimeSeries } from '@utils'
+import axios from "axios"
 
 const A0TrendLevel = () => {
     const [grdata, setGrdata] = useState([])
-    const selectOption = [ 
-        { value: 'PAF-A', label: 'PAF - A'},
-        { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'},
-        { value: 'Motor Outboard VIB - Y', label: 'Motor Outboard VIB - Y'}
-    ]
+    const [chart, setChart] = useState(null)
+    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
 
     useEffect(() => {
         setGrdata(
@@ -21,6 +19,14 @@ const A0TrendLevel = () => {
         )
     }, [])
 
+    useEffect(() => {
+        axios
+            .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/trend')
+            .then((res) => {
+                console.log(res)
+            })
+    })
+    
     const options = {
             series: [
         {
@@ -63,20 +69,16 @@ const A0TrendLevel = () => {
                     <Card>
                         <CardBody>
                             <Row>
-                                <Col xl='4'>
-                                    <Select 
-                                        defaultValue={selectOption[0]}
-                                    />
+                                <Col xl='1'>
+                                    <div className="form-control">PAF-A</div>
                                 </Col>
                                 <Col xl='2'>
                                     <Select 
-                                        defaultValue={selectOption[1]}
+                                        defaultValue={selectOption}
                                     />
                                 </Col>
                                 <Col xl='2'>
-                                    <Select 
-                                        defaultValue={selectOption[2]}
-                                    />
+                                    <div className="form-control">MOTOR Outboard VIB - Y</div>
                                 </Col>
                             </Row>
                         </CardBody>

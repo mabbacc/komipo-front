@@ -38,6 +38,14 @@ const A4aWaterfall = () => {
                                     <Plot 
                                        data={traces}
                                        layout={{
+                                         margin:{
+                                           autoexpand: false,
+                                           b: 0, // bottom
+                                           l: 0, // left
+                                           r: 0, // right
+                                           t: 0  // top
+                                         },
+                                         autosize: true,
                                          width: 800,
                                          height: 500
                                        }}
