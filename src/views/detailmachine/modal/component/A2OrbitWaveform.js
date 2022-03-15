@@ -1,15 +1,17 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
 import Select from 'react-select'
 import A2aWavefrom from './graphs/A2aWaveform'
 import A2bWaveform from './graphs/A2bWaveform'
+import A2cOrbit from "./graphs/A2cOrbit"
 
 const A2OrbitWaveform = () => {
     const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
     const filterOption = [
-        { value: '1X Filter', label: '1X Filter'},
-        { value: 'none', label: 'none'}
+        { value: 'none', label: 'none'},
+        { value: '1X Filter', label: '1X Filter'}
     ]
+
     
     return (
         <Fragment>
@@ -57,7 +59,8 @@ const A2OrbitWaveform = () => {
                 </Col>
                 <Col xl='4'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>Orbit</CardBody>
+                        {/* <CardBody style={{height: '500px'}}>Orbit</CardBody> */}
+                        <A2cOrbit />
                     </Card>
                 </Col>
             </Row>

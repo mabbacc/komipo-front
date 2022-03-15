@@ -1,85 +1,101 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
-import { generateDayWiseTimeSeries } from '@utils'
+import axios from 'axios'
+import moment from 'moment'
 
 const A1bParameterTrend = () => {
-    const [grdata, setGrdata] = useState([])
+  const [chart, setChart] = useState(null)
+  const [chartData, setChartData] = useState(null)
+
+  useEffect(() => {
+    axios
+        .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/multi-trend')
+        .then((res) => {
+          setChartData(res.data[1])
+            console.log('Multi-trend b', res.data[1])
+        })
+    }, [])
 
     useEffect(() => {
-      setGrdata(
-        generateDayWiseTimeSeries(new Date('01 Jan 2022').getTime(), 185, {
-          min: 30,
-          max: 90
-        })
-      )
-    }, [])
-    const options = {
-      series: [
-        {
-          name: 'Desktops',
-          data: grdata
-        }
-      ],
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
+      const chart = {
+        series: [],
+        options : {
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          },
+          toolbar: {
+            show: true,
+            tools:{
+              download:false 
+            }
+          }
+        },
+        dataLabels: {
           enabled: false
         },
-        toolbar: {
+        legend: {
           show: true,
-          tools:{
-            download:false 
+          showForSingleSeries: true,
+          position: 'right'
+        },
+        stroke: {
+          curve: 'straight',
+          width: 2
+        },
+        tooltip: {
+          y: {
+            formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+              return value
+            }
           }
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'straight',
-        width: 2
-      },
-      // title: {
-      //   text: 'Product Trends by Month',
-      //   align: 'left'
-      // },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
-        }
-      },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-      },
-      yaxis: {
-        title: {
-          text: 'Phase in degrees'
+        },
+        xaxis: {
+          categories: [],
+          labels: {
+            rotateAlways: false,
+            rotate: 0,
+            formatter: function(value, timestamp, opts) {
+              return moment(value).format('MM-YYYY')
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Phase in degrees'
+          },
+          labels: {
+            formatter: function(val, index) {
+              if (val !== undefined) return val.toFixed(0)
+            }
+          }
         }
       }
     }
+      if (chartData !== null) {
+        chart.series = chartData.series
+        if (chartData.xaxis[0].categories.length > 0) {
+          chart.options.xaxis.categories = chartData.xaxis[0].categories
+        }
+        setChart(chart)
+      }
+    }, [chartData])
+
     return (
         <Fragment>
-            
-
             <Row>
                 <Col>
                     <Card>
-                        <CardHeader>
+                        {/* <CardHeader>
                             <CardTitle>위상 Parameter Trend</CardTitle>
-                        </CardHeader>
-                        <CardBody style={{ height: '200px' }}>
+                        </CardHeader> */}
+                        <CardBody style={{ height: '290px' }}>
                             <Row>
                                 <Col>
-                                    <Chart
-                                        options={options}
-                                        series={options.series}
-                                        type="line"
-                                        height="200"
-                                        width='100%'
-                                    />
+                                   {chart !== null ? <Chart options={chart.options} series={chart.series} type='line' height='280' width='100%' /> : null}
                                 </Col>
                             </Row>
                         </CardBody>

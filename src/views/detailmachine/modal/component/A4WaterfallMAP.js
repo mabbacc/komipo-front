@@ -2,6 +2,7 @@ import { Fragment } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
 import Select from 'react-select'
 import A4aWaterfall from "./graphs/A4aWaterfall"
+import A4bColorMap from './graphs/A4bColorMap'
 
 const A4WaterfallMAP = () => {
     const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
@@ -38,7 +39,7 @@ const A4WaterfallMAP = () => {
                 </Col>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '620px'}}>2D Color Map</CardBody>
+                        <A4bColorMap /> 
                     </Card>
                 </Col>
             </Row>

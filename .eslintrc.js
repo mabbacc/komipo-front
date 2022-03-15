@@ -32,6 +32,7 @@ module.exports = {
     // 'init-declarations': 'error',
     'no-use-before-define': 'error',
 
+    // *
     'no-unused-vars': ['off', { varsIgnorePattern: '^[A-Z]' }],
 
     // Stylistic Issues
@@ -70,10 +71,10 @@ module.exports = {
     'arrow-spacing': 'error',
     'no-confusing-arrow': 'error',
     'no-duplicate-imports': 'error',
-    // 'no-var': 'error',
-    'object-shorthand': 'error',
+    //* 'no-var': 'error', 
+    //* 'object-shorthand': 'error',
     'prefer-const': 'error',
-    //'prefer-template': 'error'
+    //* 'prefer-template': 'error'
   }
 
   // rules: {
