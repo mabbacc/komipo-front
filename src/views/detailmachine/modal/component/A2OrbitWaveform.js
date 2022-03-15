@@ -1,15 +1,45 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
+import Select from 'react-select'
 import A2aWavefrom from './graphs/A2aWaveform'
 import A2bWaveform from './graphs/A2bWaveform'
+import A2cOrbit from "./graphs/A2cOrbit"
 
 const A2OrbitWaveform = () => {
+    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+    const filterOption = [
+        { value: 'none', label: 'none'},
+        { value: '1X Filter', label: '1X Filter'}
+    ]
+
+    
     return (
         <Fragment>
             <Row>
                 <Col xl='12'>
                     <Card>
-                        <CardBody> Select List </CardBody>
+                        <CardBody>
+                            <Row>
+                                <Col xl='1'>
+                                    <div className="form-control">PAF-A</div>
+                                </Col>
+                                <Col xl='2'>
+                                    <Select 
+                                        defaultValue={selectOption}
+                                    />
+                                </Col>
+                                <Col xl='2'>
+                                    <div className="form-control">MOTOR Outboard VIB - Y</div>
+                                </Col>
+                                <Col xl='5' />
+                                <Col xl='2'>
+                                    <Select
+                                        defaultValue={filterOption[0]}
+                                        options={filterOption}
+                                    />
+                                </Col>
+                            </Row>
+                        </CardBody>
                     </Card>
                 </Col>
             </Row>
@@ -29,7 +59,8 @@ const A2OrbitWaveform = () => {
                 </Col>
                 <Col xl='4'>
                     <Card>
-                        <CardBody style={{height: '500px'}}>Orbit</CardBody>
+                        {/* <CardBody style={{height: '500px'}}>Orbit</CardBody> */}
+                        <A2cOrbit />
                     </Card>
                 </Col>
             </Row>

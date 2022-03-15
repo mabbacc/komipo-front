@@ -2,80 +2,124 @@ import { Fragment, useEffect, useState } from "react"
 import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
 import Select from 'react-select'
-import { generateDayWiseTimeSeries } from '@utils'
+import axios from "axios"
+import moment from "moment"
+import { toast } from "react-toastify"
 
 const A0TrendLevel = () => {
-    const [grdata, setGrdata] = useState([])
-    const selectOption = [ 
-        { value: 'PAF-A', label: 'PAF - A'},
-        { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'},
-        { value: 'Motor Outboard VIB - Y', label: 'Motor Outboard VIB - Y'}
-    ]
+    const [chart, setChart] = useState(null)
+    const [chartData, setChartData] = useState(null)
+    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+
+    const source = axios.CancelToken.source()
 
     useEffect(() => {
-        setGrdata(
-            generateDayWiseTimeSeries(new Date('01 Jan 2022').getTime(), 185, {
-                min: 30,
-                max: 90
+        axios
+            .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/trend', {
+                cancelToken: source.token
             })
-        )
-    }, [])
-
-    const options = {
-            series: [
-        {
-            name: 'Desktops',
-            data: grdata
-        }
-        ],
-        chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-                enabled: false
+            .then((res) => {
+                setChartData(res.data)
+                console.log('Trend Level', res.data)
+            })
+            .catch((error) => {
+                if (axios.isCancel(error)) {
+                    console.log('Cancel Loading')
+                } else {
+                    toast.warning(<ErrorToast msg={'에러가 발생했습니다.[' + error.message + ']'} />, { autoClose: 3000 })
+                }
+            })
+            return () => {
+                source.cancel('Canceling in cleanup')
             }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        title: {
-            text: 'Product Trends by Month',
-            align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
+    }, [])
+    
+    useEffect(() => {
+        const chart = {
+            series: [],
+            options : {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: true,
+                        tools:{
+                        download:false 
+                        }
+                    }
+                },
+                colors: ['#3F51B5', '#FF9800'],
+                legend: {
+                    show: true, 
+                    position: 'right',
+                    offsetY: 200,
+                    customLegendItems: ['PAF-A pk-pk Motor Inbord X', 'PAF-A pk-pk Motor Inbord Y']                
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight',
+                    width: 2
+                },
+                xaxis: {
+                    // type: 'category',
+                    categories: [],
+                    tickAmount: 10,
+                    title: {
+                        text: 'Date'
+                    },
+                    labels :{
+                        rotateAlways: false,
+                        rotate: 0,
+                        offsetX: 15,
+                        formatter: function(value, timestamp, opts) {
+                            return moment(value).format('YY-MM-DD')
+                        }
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Displacement'
+                    },
+                    labels: {
+                        formatter: function(val, index) {
+                            if (val !== undefined) return val.toFixed(0)
+                        }
+                    }
+                }
+            }
         }
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+
+        if (chartData !== null) {
+            chart.series = chartData.series
+            if (chartData.xaxis[0].categories.length > 0) {
+                chart.options.xaxis.categories = chartData.xaxis[0].categories
+            }
+            setChart(chart)
         }
-      }
-    return (
-        <Fragment>
+    }, [chartData])
+
+        return (
+            <Fragment>
             <Row>
                 <Col xl='12'>
                     <Card>
                         <CardBody>
                             <Row>
-                                <Col xl='4'>
-                                    <Select 
-                                        defaultValue={selectOption[0]}
-                                    />
+                                <Col xl='1'>
+                                    <div className="form-control">PAF-A</div>
                                 </Col>
                                 <Col xl='2'>
                                     <Select 
-                                        defaultValue={selectOption[1]}
-                                    />
+                                        defaultValue={selectOption}
+                                        />
                                 </Col>
                                 <Col xl='2'>
-                                    <Select 
-                                        defaultValue={selectOption[2]}
-                                    />
+                                    <div className="form-control">MOTOR Outboard VIB - Y</div>
                                 </Col>
                             </Row>
                         </CardBody>
@@ -86,19 +130,13 @@ const A0TrendLevel = () => {
             <Row>
                 <Col>
                     <Card>
-                        <CardHeader>
+                        {/* <CardHeader>
                             <CardTitle>Overall Trend</CardTitle>
-                        </CardHeader>
+                        </CardHeader> */}
                         <CardBody>
                             <Row>
                                 <Col>
-                                    <Chart
-                                        options={options}
-                                        series={options.series}
-                                        type="line"
-                                        height="500"
-                                        width='100%'
-                                    />
+                                    {chart !== null ? <Chart options={chart.options} series={chart.series} type='line' height='500' width='100%' /> : null}
                                 </Col>
                             </Row>
                         </CardBody>

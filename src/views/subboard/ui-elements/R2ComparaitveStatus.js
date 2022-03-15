@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import { CardBody, Col, Row, Card, CardTitle } from "reactstrap"
+import AlarmHistoryTable from "./AlarmHistoryTable"
 import ComparativeStatus from "./ComparativeStatus"
 
 const R2ComparaitveStatus = () => {
@@ -9,8 +10,8 @@ const R2ComparaitveStatus = () => {
             <Row>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '350px'}}>
-                            <CardTitle tag='h6' style={{textAlign: 'center'}}>Comparative status(current)</CardTitle>
+                        <CardBody style={{height: '315px'}}>
+                            <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Comparative status(current)</CardTitle>
                             <ComparativeStatus />
                         </CardBody>
                     </Card>
@@ -18,8 +19,9 @@ const R2ComparaitveStatus = () => {
                 </Col>
                 <Col xl='6'>
                     <Card>
-                        <CardBody style={{height: '350px'}}>
-                            <CardTitle tag='h6' style={{textAlign: 'center'}}>Alarm history table (Report 기능 포함)</CardTitle>
+                        <CardBody style={{height: '315px'}}>
+                            <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Alarm history table (Report 기능 포함)</CardTitle>
+                            <AlarmHistoryTable />
                         </CardBody>
                     </Card>
                     {/* Alarm History table */}

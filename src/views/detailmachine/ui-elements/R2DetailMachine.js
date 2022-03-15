@@ -1,8 +1,6 @@
 import { Fragment } from "react"
 import { Card, Col, Row, CardBody, CardTitle } from "reactstrap"
 
-import CardMedal from '@src/views/ui-elements/cards/advance/CardMedal'
-import CardTransactions from '@src/views/ui-elements/cards/advance/CardTransactions'
 import Summary from "./Summary"
 import AlarmFrequency from "./AlarmFrequency"
 import FaultyTendency from "./FaultyTendency"
@@ -13,7 +11,7 @@ const R2DetailMachine = () => {
             <Row className='match-height'>
                 <Col xl='4'>
                     <Card>
-                        <CardBody style={{height: '600px'}}>
+                        <CardBody style={{height: '500px'}}>
                             <CardTitle tag='h5'>Detail Machine Overall</CardTitle>
                         </CardBody>
                     </Card>
@@ -26,7 +24,7 @@ const R2DetailMachine = () => {
                         <Col xl='6'>
                             <Card>
                                 <CardBody style={{height: '350px'}}>
-                                    <CardTitle tag='h6' style={{textAlign: 'center'}}>Alarm frequency</CardTitle>
+                                    <CardTitle style={{fontSize: 'small', textAlign: 'center'}}>Alarm frequency</CardTitle>
                                     <AlarmFrequency />
                                 </CardBody>
                             </Card>
@@ -34,7 +32,7 @@ const R2DetailMachine = () => {
                         <Col xl='6'>
                             <Card>
                                 <CardBody style={{height: '350px'}}>
-                                    <CardTitle tag='h6' style={{textAlign: 'center'}}>Diagnosed Faulty Tendency</CardTitle>
+                                    <CardTitle style={{fontSize: 'small', textAlign: 'center', marginBottom: 'auto'}}>Diagnosed Faulty Tendency</CardTitle>
                                     <FaultyTendency />
                                 </CardBody>
                             </Card>

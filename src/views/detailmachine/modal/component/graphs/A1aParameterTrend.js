@@ -1,73 +1,114 @@
 import { Fragment, useEffect, useState } from "react"
 import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
-import { generateDayWiseTimeSeries } from '@utils'
+import axios from "axios"
+import moment from "moment"
 
 const A1aParameterTrend = () => {
-    const [grdata, setGrdata] = useState([])
+  const [chart, setChart] = useState(null)
+  const [chartData, setChartData] = useState(null)
 
-    useEffect(() => {
-      setGrdata(
-        generateDayWiseTimeSeries(new Date('01 Jan 2022').getTime(), 185, {
-          min: 30,
-          max: 90
+  useEffect(() => {
+    axios
+        .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/multi-trend')
+        .then((res) => {
+          setChartData(res.data[0])
+            console.log('Multi-trend A', res.data[0])
         })
-      )
-    }, [])
-    const options = {
-      series: [
-        {
-          name: 'Desktops',
-          data: grdata
-        }
-      ],
+  }, [])
+
+
+  useEffect(() => {
+    const chart = {
+      series: [],
+      options : {
       chart: {
         height: 350,
         type: 'line',
         zoom: {
           enabled: false
+        },
+        toolbar: {
+          show: true,
+          tools:{
+            download:false 
+          }
         }
+      },
+      colors: ['#FA4443', '#008FFB', '#00E396', '#F9A3A4', '#775DD0', '#A5978B', '#FEB019'],
+      legend: {
+        show: true, 
+        position: 'right'
       },
       dataLabels: {
         enabled: false
       },
       stroke: {
-        curve: 'straight'
+        curve: 'straight',
+        width: 2
       },
-      title: {
-        text: 'Product Trends by Month',
-        align: 'left'
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
+      tooltip: {
+        y: {
+          formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+            return value
+          }
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-      }
+        categories: [],
+        labels: {
+          rotateAlways: false,
+          rotate: 0,
+          formatter: function(value) {
+            return moment(value).format('YYYY-MM-DD')
+          }
+        }
+      },
+      yaxis: [
+        {
+          /* Speed */
+          opposite: true,
+          labels: {
+            formatter: function(val, index) {
+              if (val !== undefined) return val.toFixed(0)
+            }
+          }
+        },
+        {
+          // title: {
+          //   text: 'A'
+          // },
+          labels: {
+            formatter: function(val, index) {
+              if (val !== undefined) return val
+            }
+          }
+        }
+      ]
     }
+  }
+
+    if (chartData !== null) {
+      chart.series = chartData.series
+      if (chartData.xaxis[0].categories.length > 0) {
+        chart.options.xaxis.categories = chartData.xaxis[0].categories
+      }
+      setChart(chart)
+    }
+  }, [chartData])
+
     return (
         <Fragment>
-            
-
             <Row>
                 <Col>
                     <Card>
-                        <CardHeader>
+                        {/* <CardHeader>
                             <CardTitle>Parameter Trend</CardTitle>
-                        </CardHeader>
-                        <CardBody>
+                        </CardHeader> */}
+                        <CardBody style={{ height: '290px' }}>
                             <Row>
                                 <Col>
-                                    <Chart
-                                        options={options}
-                                        series={options.series}
-                                        type="line"
-                                        height="200"
-                                        width='100%'
-                                    />
+                                  {chart !== null ? <Chart options={chart.options} series={chart.series} type='line' height='290' width='100%' /> : null}
                                 </Col>
                             </Row>
                         </CardBody>
