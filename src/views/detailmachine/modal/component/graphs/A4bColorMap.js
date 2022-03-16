@@ -1,19 +1,9 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
+import { Fragment } from 'react'
+import { Card, CardBody, Col, Row } from "reactstrap"
 import Plot from 'react-plotly.js'
-import axios from 'axios'
 
-const A4aColorMap = () => {
-  const [chartData, setChartData] = useState(null)
 
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/waterfall')
-      .then((res) => {
-        setChartData(res.data[1])
-        console.log('colorMap', res.data[1])
-      })
-  }, [])
+const A4aColorMap = (props) => {
 
     return (
         <Fragment>
@@ -27,7 +17,7 @@ const A4aColorMap = () => {
                             <Row>
                                 <Col>
                                     <Plot 
-                                      data={chartData}
+                                      data={props.graphData}
                                       layout={{
                                         autosize: true,
                                         showlegend: false,
@@ -41,7 +31,6 @@ const A4aColorMap = () => {
                     </Card>
                 </Col>
             </Row>
-
         </Fragment>
     )
 }

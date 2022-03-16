@@ -1,23 +1,12 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
+import { Card, CardBody, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
-import axios from 'axios'
 
-const A3aSpectrumPlot = () => {
-  const [chart, setChart] = useState(null)
+const A3aSpectrumPlot = (props) => {
   const [chartData, setChartData] = useState(null)
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/spectrum')
-      .then((res) => {
-        setChartData(res.data[0])
-        console.log('spectrum A', res.data[0])
-      })
-  }, [])
-
-  useEffect(() => {
-    const chart = {
+    const chartData = {
         series: [],
         options: {
           chart: {
@@ -67,19 +56,18 @@ const A3aSpectrumPlot = () => {
         }
       }
 
-    if (chartData !== null) {
-      chart.series = chartData.series
-      if (chartData.xaxis[0].categories.length > 0) {
-        chart.options.xaxis.categories = chartData.xaxis[0].categories
-      }
-      setChart(chart)
+  
+  if (props.graphData !== undefined) {
+    chartData.series = props.graphData.series
+    if (props.graphData.xaxis[0].categories.length > 0) {
+      chartData.options.xaxis.categories = props.graphData.xaxis[0].categories
     }
-  }, [chartData])
+    setChartData(chartData)
+  }
+}, [props.graphData])
 
     return (
         <Fragment>
-            
-
             <Row>
                 <Col>
                     <Card>
@@ -89,14 +77,13 @@ const A3aSpectrumPlot = () => {
                         <CardBody>
                             <Row>
                                 <Col>
-                                  {chart !== null ? <Chart options={chart.options} series={chart.series} type='line' height='450' width='100%' /> : null}
+                                  {chartData !== null ? <Chart options={chartData.options} series={chartData.series} type='line' height='450' width='100%' /> : null}
                                 </Col>
                             </Row>
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
-
         </Fragment>
     )
 }

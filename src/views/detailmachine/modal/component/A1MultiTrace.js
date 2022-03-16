@@ -6,7 +6,18 @@ import A1bParameterTrend from "./graphs/A1bParameterTrend"
 import axios from "axios"
 
 const A1MultiTrace = () => {
+    const [chartData, setChartData] = useState([])
     const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+
+    useEffect(() => {
+        axios
+            .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/multi-trend')
+            .then((res) => {
+              setChartData(res.data)
+                console.log('Multi-trend', res)
+            })
+            console.log('chartData', chartData)
+      }, [])
 
     return (
         <Fragment>
@@ -32,10 +43,10 @@ const A1MultiTrace = () => {
             <Row>
                 <Col>
                     <Card>
-                        <A1aParameterTrend /> 
+                        <A1aParameterTrend graphData={chartData[0]} /> 
                     </Card>
                     <Card>
-                        <A1bParameterTrend />
+                        <A1bParameterTrend graphData={chartData[1]} />
                     </Card>
                 </Col>
             </Row>

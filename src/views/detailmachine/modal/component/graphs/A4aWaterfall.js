@@ -1,19 +1,8 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
+import { Fragment } from 'react'
+import { Card, CardBody, Col, Row } from "reactstrap"
 import Plot from 'react-plotly.js'
-import axios from 'axios'
 
-const A4aWaterfall = () => {
-  const [chartData, setChartData] = useState(null)
-
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/waterfall')
-      .then((res) => {
-        setChartData(res.data[0])
-        console.log('waterfall', res.data[0])
-      })
-  }, [])
+const A4aWaterfall = (props) => {
 
     return (
         <Fragment>
@@ -27,7 +16,7 @@ const A4aWaterfall = () => {
                             <Row>
                                 <Col>
                                     <Plot 
-                                      data={chartData}
+                                      data={props.graphData}
                                       layout={{
                                         margin:{
                                           autoexpand: false,
@@ -49,7 +38,6 @@ const A4aWaterfall = () => {
                     </Card>
                 </Col>
             </Row>
-
         </Fragment>
     )
 }

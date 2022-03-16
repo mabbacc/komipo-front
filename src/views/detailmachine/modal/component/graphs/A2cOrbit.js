@@ -1,23 +1,12 @@
 import { Fragment, useEffect, useState } from "react"
-import { Card, CardBody, CardTitle, CardHeader, Col, Row } from "reactstrap"
+import { Card, CardBody, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
-import axios from "axios"
 
-const A2cOrbit = () => {
-    const [chart, setChart] = useState(null)
+const A2cOrbit = (props) => {
     const [chartData, setChartData] = useState(null)
 
-    useEffect(() => {
-        axios
-          .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/waveform?filter=true')
-          .then((res) => {
-            setChartData(res.data[2])
-            console.log('Orbit none', res.data[2])
-          })
-      }, [])
-
       useEffect(() => {
-        const chart = {
+        const chartData = {
           series: [],
           options : {
             chart: {
@@ -72,16 +61,12 @@ const A2cOrbit = () => {
             }
           }
         }
-  
-        if (chartData !== null) {
-          chart.series = chartData.series
-        //   if (chartData.xaxis[0].categories.length > 0) {
-        //     chart.options.xaxis.categories = chartData.xaxis[0].categories
-        //   }
-          setChart(chart)
-        }
-       
-      }, [chartData])
+
+      if (props.graphData !== undefined) {
+        chartData.series = props.graphData.series
+        setChartData(chartData)
+      }
+    }, [props.graphData])
 
     return (
         <Fragment>
@@ -94,14 +79,13 @@ const A2cOrbit = () => {
                         <CardBody>
                             <Row>
                                 <Col>
-                                  {chart !== null ? <Chart options={chart.options} series={chart.series} type='line' height='500' width='100%' /> : null}
+                                  {chartData !== null ? <Chart options={chartData.options} series={chartData.series} type='line' height='500' width='100%' /> : null}
                                 </Col>
                             </Row>
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
-
         </Fragment>
     )
 }
