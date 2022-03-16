@@ -31,7 +31,7 @@ const A2aWaveform = (props) => {
           },
           tooltip: {
             y: {
-              formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+              formatter: (value, { series, seriesIndex, dataPointIndex, w }) => {
                 return value
               }
             }
@@ -62,7 +62,7 @@ const A2aWaveform = (props) => {
               text: 'Displacement[μm]'
             },
             labels: {
-              formatter: function(val, index) {
+              formatter: (val, index) => {
                 if (val !== undefined) return val.toFixed(0)
               }
             }

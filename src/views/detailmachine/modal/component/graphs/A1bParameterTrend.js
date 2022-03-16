@@ -37,7 +37,7 @@ const A1bParameterTrend = (props) => {
         },
         tooltip: {
           y: {
-            formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+            formatter: (value, { series, seriesIndex, dataPointIndex, w }) => {
               return value
             }
           }
@@ -47,7 +47,7 @@ const A1bParameterTrend = (props) => {
           labels: {
             rotateAlways: false,
             rotate: 0,
-            formatter: function(value, timestamp, opts) {
+            formatter: (value, timestamp, opts) => {
               return moment(value).format('MM-YYYY')
             }
           }
@@ -57,7 +57,7 @@ const A1bParameterTrend = (props) => {
             text: 'Phase in degrees'
           },
           labels: {
-            formatter: function(val, index) {
+            formatter: (val, index) => {
               if (val !== undefined) return val.toFixed(0)
             }
           }

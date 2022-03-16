@@ -37,7 +37,7 @@ const A1aParameterTrend = (props) => {
       },
       tooltip: {
         y: {
-          formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+          formatter: (value, { series, seriesIndex, dataPointIndex, w }) => {
             return value
           }
         }
@@ -47,7 +47,7 @@ const A1aParameterTrend = (props) => {
         labels: {
           rotateAlways: false,
           rotate: 0,
-          formatter: function(value) {
+          formatter: (value) => {
             return moment(value).format('YYYY-MM-DD')
           }
         }
@@ -57,7 +57,7 @@ const A1aParameterTrend = (props) => {
           /* Speed */
           opposite: true,
           labels: {
-            formatter: function(val, index) {
+            formatter: (val, index) => {
               if (val !== undefined) return val.toFixed(0)
             }
           }
@@ -67,7 +67,7 @@ const A1aParameterTrend = (props) => {
           //   text: 'A'
           // },
           labels: {
-            formatter: function(val, index) {
+            formatter: (val, index) => {
               if (val !== undefined) return val
             }
           }

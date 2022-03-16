@@ -5,6 +5,7 @@ import R3ComparativeTrend from './ui-elements/R3ComparativeTrend'
 
 
 const SubboardIndex = () => {
+
     return (
         <Fragment>
             <R1MachineList />

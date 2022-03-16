@@ -48,7 +48,7 @@ const A3bSpectrumPlot = (props) => {
             text: 'Amplitude[μm]'
           },
           labels: {
-            formatter: function(val, index) {
+            formatter: (val, index) => {
               if (val !== undefined) return val.toFixed(0)
             }
           }
