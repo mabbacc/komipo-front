@@ -4,6 +4,7 @@ import Select from 'react-select'
 import axios from "axios"
 import A4aWaterfall from "./graphs/A4aWaterfall"
 import A4bColorMap from './graphs/A4bColorMap'
+import CalendarPeriodSetting from "./CalendarPeriodSetting"
 
 const A4WaterfallMAP = () => {
     const [chartData, setChartData] = useState([])
@@ -55,13 +56,7 @@ const A4WaterfallMAP = () => {
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-                    <Card>
-                        <CardBody>기간 선정</CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <CalendarPeriodSetting /> 
         </Fragment>
     )
 }

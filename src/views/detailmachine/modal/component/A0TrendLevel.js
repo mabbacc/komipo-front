@@ -6,9 +6,11 @@ import axios from 'axios'
 import moment from 'moment'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import CalendarPeriodSetting from './CalendarPeriodSetting'
 
 const A0TrendLevel = () => {
   const hierarchyStore = useSelector((state) => state.hierarchy)
+  console.log('hihihi', hierarchyStore)
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
@@ -106,9 +108,9 @@ const A0TrendLevel = () => {
     }
   }, [chartData])
 
-  const hierarchyView = () => {
-    console.log(JSON.stringify(hierarchyStore))
-  }
+  // const hierarchyView = () => {
+  //   console.log(JSON.stringify(hierarchyStore))
+  // }
 
   return (
     <Fragment>
@@ -147,13 +149,8 @@ const A0TrendLevel = () => {
         </Col>
       </Row>
 
-      <Row>
-        <Col>
-          <Card>
-            <CardBody>기간 선정{hierarchyView()}</CardBody>
-          </Card>
-        </Col>
-      </Row>
+      <CalendarPeriodSetting />
+      
     </Fragment>
   )
 }

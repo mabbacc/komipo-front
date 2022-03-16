@@ -4,6 +4,7 @@ import Select from 'react-select'
 import A3aSpectrumPlot from "./graphs/A3aSpectrumPlot"
 import A3bSpectrumPlot from "./graphs/A3bSpectrumPlot"
 import axios from "axios"
+import SelectPeriodSetting from "./SelectPeriodSetting"
 
 const A3Spectrum = () => {
     const [chartData, setChartData] = useState([])
@@ -55,13 +56,7 @@ const A3Spectrum = () => {
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-                    <Card>
-                        <CardBody>기간 선정</CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <SelectPeriodSetting /> 
         </Fragment>
     )
 }
