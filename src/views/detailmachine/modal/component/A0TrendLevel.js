@@ -10,7 +10,7 @@ import CalendarPeriodSetting from './CalendarPeriodSetting'
 
 const A0TrendLevel = () => {
   const hierarchyStore = useSelector((state) => state.hierarchy)
-  console.log('hihihi', hierarchyStore)
+  console.log('hierarchyStore', hierarchyStore)
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
@@ -150,7 +150,7 @@ const A0TrendLevel = () => {
       </Row>
 
       <CalendarPeriodSetting />
-      
+
     </Fragment>
   )
 }
