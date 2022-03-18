@@ -4,14 +4,24 @@ import Chart from 'react-apexcharts'
 import { useHistory } from "react-router"
 
 
-const A6COM7 = () => {
+const A6COM7 = (props) => {
     const history = useHistory()
+    const [hierarchy, setHierarchy] = useState({})
+    const [equipment, setEquipment] = useState([])
 
-    const linkToSubboard = useCallback(() => {
+    useEffect(() => {
+        setHierarchy(props.hierarchy)
+        setEquipment(props.equipment)
+    }, [props.hierarchy, props.equipment])
+
+    const linkToSubboard = useCallback((id) => {
         history.push({
-            pathname: '/subboard'
+            pathname: '/subboard',
+            state: {
+                equipmenttype: id
+            }
         })
-    },[history])
+    },[history, equipment])
 
 
     return (
@@ -21,7 +31,7 @@ const A6COM7 = () => {
                         <Button.Ripple
                             color={'primary'}
                             block
-                            onClick={() => linkToSubboard()}
+                            onClick={() => linkToSubboard(equipment[14].equipmenttype)}
                         >
                             COM7
                         </Button.Ripple>

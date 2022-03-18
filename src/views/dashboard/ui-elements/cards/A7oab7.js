@@ -4,14 +4,24 @@ import Chart from 'react-apexcharts'
 import { useHistory } from "react-router"
 
 
-const A7OAB7 = () => {
+const A7OAB7 = (props) => {
     const history = useHistory()
+    const [hierarchy, setHierarchy] = useState({})
+    const [equipment, setEquipment] = useState([])
 
-    const linkToSubboard = useCallback(() => {
+    useEffect(() => {
+        setHierarchy(props.hierarchy)
+        setEquipment(props.equipment)
+    }, [props.hierarchy, props.equipment])
+
+    const linkToSubboard = useCallback((id) => {
         history.push({
-            pathname: '/subboard'
+            pathname: '/subboard',
+            state: {
+                equipmenttype: id
+            }
         })
-    },[history])
+    },[history, equipment])
 
 
     return (
@@ -21,9 +31,9 @@ const A7OAB7 = () => {
                         <Button.Ripple
                             color={'primary'}
                             block
-                            onClick={() => linkToSubboard()}
+                            onClick={() => linkToSubboard(equipment[15].equipmenttype)}
                         >
-                            OAB7
+                            {(hierarchy !== undefined) ? hierarchy.areaid : ''}
                         </Button.Ripple>
 
                         <Card style={{ height: '242px' }}>

@@ -6,20 +6,21 @@ import { useHistory } from "react-router"
 const A4FWS7 = (props) => {
     const history = useHistory()
     const [hierarchy, setHierarchy] = useState({})
-    console.log(props)
+    const [equipment, setEquipment] = useState([])
 
     useEffect(() => {
         setHierarchy(props.hierarchy)
-    }, [props.hierarchy])
+        setEquipment(props.equipment)
+    }, [props.hierarchy, props.equipment])
 
     const linkToSubboard = useCallback((id) => {
         history.push({
             pathname: '/subboard',
             state: {
-                area: hierarchy.areaid
+                equipmenttype: id
             }
         })
-    },[history, hierarchy])
+    },[history, equipment])
 
     return (
         <Fragment>
@@ -29,10 +30,9 @@ const A4FWS7 = (props) => {
                         <Button.Ripple
                             color={'primary'}
                             block
-                            onClick={() => linkToSubboard(hierarchy.areaid)}
+                            onClick={() => linkToSubboard(equipment[10].equipmenttype)}
                         >
-                            FWS7
-                            {/* {hierarchy.areaid}  */}
+                            {(hierarchy !== undefined) ? hierarchy.areaid : ''}
                         </Button.Ripple>
 
                         <Card style={{ height: '820px' }}>

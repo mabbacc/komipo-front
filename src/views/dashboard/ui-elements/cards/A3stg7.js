@@ -3,14 +3,24 @@ import { Col, Row, Card, CardBody, Button, Table } from "reactstrap"
 import Chart from 'react-apexcharts'
 import { useHistory } from "react-router"
 
-const A3STG7 = () => {
+const A3STG7 = (props) => {
     const history = useHistory()
+    const [hierarchy, setHierarchy] = useState({})
+    const [equipment, setEquipment] = useState([])
 
-    const linkToSubboard = useCallback(() => {
+    useEffect(() => {
+        setHierarchy(props.hierarchy)
+        setEquipment(props.equipment)
+    }, [props.hierarchy, props.equipment])
+
+    const linkToSubboard = useCallback((id) => {
         history.push({
-            pathname: '/subboard'
+            pathname: '/subboard',
+            state: {
+                equipmenttype: id
+            }
         })
-    },[history])
+    },[history, equipment])
 
     return (
         <Fragment>
@@ -19,9 +29,9 @@ const A3STG7 = () => {
                         <Button.Ripple
                             color={'primary'}
                             block
-                            onClick={() => linkToSubboard()}
+                            onClick={() => linkToSubboard(equipment[5].equipmenttype)}
                         >
-                            STG7
+                            {(hierarchy !== undefined) ? hierarchy.areaid : ''}
                         </Button.Ripple>
 
                         <Card style={{ height: '820px' }}>

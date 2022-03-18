@@ -6,24 +6,21 @@ import { useHistory } from "react-router"
 const A1CAS7 = (props) => {
     const history = useHistory()
     const [hierarchy, setHierarchy] = useState({})
-    const [areaid, setAreaid] = useState()
-    const [equipmentType, setEquipmentType] = useState(null)
+    const [equipment, setEquipment] = useState([])
 
-    const linkToSubboard = useCallback((aid, et) => {
+    useEffect(() => {
+        setHierarchy(props.hierarchy)
+        setEquipment(props.equipment)
+    }, [props.hierarchy, props.equipment])
+
+    const linkToSubboard = useCallback((id) => {
         history.push({
             pathname: '/subboard',
             state: {
-
+                equipmenttype: id
             }
         })
-    },[history])
-
-    //console.log('props', props)
-    useEffect(() => {
-        setHierarchy(props.hierarchy)
-    }, [props.hierarchy])
-
-    // console.log('hihi', hierarchy.child)
+    },[history, equipment])
 
     const options = {
         series: [44, 55, 41, 17, 15],
@@ -56,7 +53,7 @@ const A1CAS7 = (props) => {
                     <Button.Ripple
                         color={'primary'}
                         block
-                        onClick={() => linkToSubboard()}
+                        onClick={() => linkToSubboard(equipment[0].equipmenttype)}
                     >
                         {(hierarchy !== undefined) ? hierarchy.areaid : ''}    
                     </Button.Ripple>

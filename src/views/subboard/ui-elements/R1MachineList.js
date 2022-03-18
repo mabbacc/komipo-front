@@ -4,9 +4,12 @@ import { useHistory } from 'react-router'
 import Select from 'react-select'
 import { useSelector } from "react-redux"
 
-const R1MachineList = () => {
+const R1MachineList = (props) => {
     const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
-    console.log('hierarchyStore', hierarchyData)
+    const equipmentData = useSelector((state) => state.equipment.equipment)
+    const [equipmentid, setEquipmentid] = useState(null)
+    console.log('subprops', props)
+
     const history = useHistory()
 
     const linkToDashboard = useCallback(() => {
@@ -16,6 +19,7 @@ const R1MachineList = () => {
     }, [history])
 
     const [hierarchy, setHierarchy] = useState([])
+    const [equipment, setEquipment] = useState([])
     const [equipmentTypeOption, setEquipmentTypeOption] = useState([])
     const [equipmentIdOption, setEquipmentIdOption] = useState([])
     const [selectETOption, setSelectETOption] = useState(null)
@@ -23,29 +27,51 @@ const R1MachineList = () => {
 
     useEffect(() => {
         setHierarchy(hierarchyData)
-    }, [hierarchyData])
-   
+        setEquipment(equipmentData)
+    }, [hierarchyData, equipmentData])
+
+
+    useEffect(() => {
+        setEquipmentid(props.equipment)
+    }, [props.equipment])
 
     // 첫 번째 select (Equipment Type)
     useEffect(() => {
-        if (hierarchyData.length > 0) {
+        if (equipmentData.length > 0) {
             const selectETOptionList = []
-        
-            hierarchyData.forEach((item) => {
-                (item.child).forEach((item) => {
-                    const newItem = {
-                        value: item.equipmenttype,
-                        label: item.equipmenttype
-                    }
-                    if (selectETOptionList.filter(e => e.value === item.equipmenttype).length <= 0) {
-                      selectETOptionList.push(newItem)
-                    }
+
+            equipmentData.forEach((item) => {
+                selectETOptionList.push({
+                    value: item.equipmenttype,
+                    label: item.equipmenttype
                 })
             })
+            console.log('select eq', selectETOptionList)
             setEquipmentTypeOption(selectETOptionList)
-            setSelectETOption(selectETOptionList[0])
+            setSelectETOption(selectETOptionList.find((item) => item.value === equipmentid))
         }
-    }, [hierarchy])
+    }, [equipment, equipmentid])
+
+    // useEffect(() => {
+    //     if (hierarchyData.length > 0) {
+    //         const selectETOptionList = []
+
+    //         hierarchyData.forEach((item) => {
+    //             (item.child).forEach((item) => {
+    //                 console.log('*****', item)
+    //                 const newItem = {
+    //                     value: item.equipmenttype,
+    //                     label: item.equipmenttype
+    //                 }
+    //                 if (selectETOptionList.filter(e => e.value === item.equipmenttype).length <= 0) {
+    //                   selectETOptionList.push(newItem)
+    //                 }
+    //             })
+    //         })
+    //         setEquipmentTypeOption(selectETOptionList)
+    //         setSelectETOption(selectETOptionList[0])
+    //     }
+    // }, [hierarchy])
 
     // Equipment Type의 변화에 따른 Equipmentid select
     useEffect(() => {
@@ -53,8 +79,6 @@ const R1MachineList = () => {
     
             hierarchyData.forEach((item) => {
                 (item.child).forEach((item) => {
-                    console.log('equipmenttype', item.equipmenttype)
-                    console.log('select', selectETOption)
                     if (selectETOption !== null && selectETOption !== undefined) {
                         if (item.equipmenttype === selectETOption.value) {
                             selectEIdOptionList.push({
