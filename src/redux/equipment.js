@@ -4,45 +4,45 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // ** Axios Imports
 import axios from 'axios'
 
-export const getHierarchy = createAsyncThunk('main/getHierarchy', async () => {
-  const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/front/dashboard/hierarchy`)
+export const getEquipment = createAsyncThunk('main/getEquipment', async () => {
+  const response = await axios.get(`${process.env.REACT_APP_API_SERVER_URL}/front/dashboard/equipment`)
   return {
     message: response.data.message,
-    hierarchy: response.data.data
+    equipment: response.data.data
   }
 })
 
-export const hierarchySlice = createSlice({
-  name: 'hierarchy',
+export const equipmentSlice = createSlice({
+  name: 'equipment',
   initialState: {
     loading: 'idle',
     currentRequestId: undefined,
     message: '',
-    hierarchy: []
+    equipment: []
   },
   reducers: {
     handleOp: (state, action) => {
       state.query = action.payload
     }
-  },
+  },  
   extraReducers: (builder) => {
     builder
-      .addCase(getHierarchy.pending, (state, action) => {
+      .addCase(getEquipment.pending, (state, action) => {
         state.loading = 'pending'
         state.currentRequestId = action.meta.requestId
       })
-      .addCase(getHierarchy.fulfilled, (state, action) => {
+      .addCase(getEquipment.fulfilled, (state, action) => {
         const { requestId } = action.meta
         if (state.loading === 'pending' && state.currentRequestId === requestId) {
           state.loading = 'idle'
           state.currentRequestId = undefined
           state.message = action.payload.message
-          state.hierarchy = action.payload.hierarchy
+          state.equipment = action.payload.equipment
         }
       })
   }
 })
 
-export const { handleOp } = hierarchySlice.actions
+export const { handleOp } = equipmentSlice.actions
 
-export default hierarchySlice.reducer
+export default equipmentSlice.reducer

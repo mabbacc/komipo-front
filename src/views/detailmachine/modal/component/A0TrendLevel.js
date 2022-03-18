@@ -5,10 +5,12 @@ import Select from 'react-select'
 import axios from 'axios'
 import moment from 'moment'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getHierarchy } from '../../../../redux/hierarchy'
 
 const A0TrendLevel = () => {
-  const hierarchyStore = useSelector((state) => state.hierarchy)
+  const { hierarchy, loading } = useSelector((state) => state.hierarchy)
+  const dispatch = useDispatch()
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
@@ -17,6 +19,9 @@ const A0TrendLevel = () => {
   const source = axios.CancelToken.source()
 
   useEffect(() => {
+    if (0 === hierarchy.length) {
+      dispatch(getHierarchy())
+    }
     axios
       .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/trend', {
         cancelToken: source.token
@@ -107,7 +112,7 @@ const A0TrendLevel = () => {
   }, [chartData])
 
   const hierarchyView = () => {
-    console.log(JSON.stringify(hierarchyStore))
+    console.log(JSON.stringify(hierarchy))
   }
 
   return (
