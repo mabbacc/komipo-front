@@ -4,6 +4,7 @@ import Select from 'react-select'
 import A1aParameterTrend from "./graphs/A1aParameterTrend"
 import A1bParameterTrend from "./graphs/A1bParameterTrend"
 import axios from "axios"
+import CalendarPeriodSetting from "./CalendarPeriodSetting"
 
 const A1MultiTrace = () => {
     const [chartData, setChartData] = useState([])
@@ -51,13 +52,7 @@ const A1MultiTrace = () => {
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-                    <Card>
-                        <CardBody>기간 선정</CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <CalendarPeriodSetting />
         </Fragment>
     )
 }

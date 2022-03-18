@@ -5,6 +5,7 @@ import A2aWavefrom from './graphs/A2aWaveform'
 import A2bWaveform from './graphs/A2bWaveform'
 import A2cOrbit from "./graphs/A2cOrbit"
 import axios from "axios"
+import SelectPeriodSetting from './SelectPeriodSetting'
 
 const A2OrbitWaveform = () => {
     const [chartData, setChartData] = useState([])
@@ -96,13 +97,7 @@ const A2OrbitWaveform = () => {
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-                    <Card>
-                        <CardBody>기간 선정</CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <SelectPeriodSetting /> 
         </Fragment>
     )
 }

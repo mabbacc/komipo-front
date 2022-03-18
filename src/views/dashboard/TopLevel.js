@@ -1,176 +1,364 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Button, Card, CardBody, Col, Row } from "reactstrap"
 import Chart from 'react-apexcharts'
+import { useSelector } from "react-redux"
+import axios from "axios"
+import A1cas7 from "./ui-elements/cards/A1cas7"
 
 const TopLevel = () => {
-    const options = {
-        series: [44, 55, 41, 17, 15],
-        chart: {
-        type: 'donut'
-      },
-      legend: {
-        show: false
-      },
-      responsive: [
-          {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200
-          },
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }
-    ]
-      }
+    const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
+    
     return (
         <Fragment>
             <div id='dashboard-ecommerce'>
-                <Row className='match-height'>
-                    <Col xl='3'>
-                        <Col xl='12'>
-                            <div className='text-center mb-1'>
-                                <Row>
-                                    <Col className='col-6 d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            block
-                                            size='sm'
-                                        >
-                                            1-1.통풍계통
-                                        </Button.Ripple>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Card>
-                            <Row>
-                                <Col xl='6'>
-                                    <Chart
-                                        options={options}
-                                        series={options.series}
-                                        type="donut"
-                                        height="200"
-                                        width='100%'
-                                    />
-                                </Col>
-                                <Col xl='6'>
-                                    <Chart
-                                        options={options}
-                                        series={options.series}
-                                        type="donut"
-                                        height="200"
-                                        width='100%'
-                                    />
-                                </Col>
-                            </Row>
-                            {/* <CardBody style={{height: '200px'}} /> */}
-                        </Card>
-                    </Col>
-                    <Col xl='6'>
-                        <Col xl='12'>
-                            <div className='text-center mb-1'>
-                                <Row>
-                                    <Col className='col-6 d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            block
-                                            size='sm'
-                                        >
-                                            2.터빈설비 터빈본체
-                                        </Button.Ripple>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height: '200px'}} />
-                        </Card>
-                    </Col>
-                    <Col xl='3'>
-                        <Col xl='12'>
-                            <div className='text-center mb-1'>
-                                <Row>
-                                    <Col className='col-6 d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            block
-                                            size='sm'
-                                        >
-                                            6.탈황설비계통
-                                        </Button.Ripple>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height: '200px'}} />
-                        </Card>
-                    </Col>
-                </Row>
+                <A1cas7 hierarchy={hierarchyData[0]}/>
+                
 
-                <Row className='match-height'>
-                    <Col xl='3'>
-                        <Row className='match-height'>
-                            <Col xl='12'>
-                                <Card className='text-center mb-1'>1-2.통풍계통</Card>
-                                <Card>
-                                    <CardBody style={{height: '200px'}} />
-                                </Card>
+                {/*---FWS7---*/}
+                <Col xl='2' style={{float: 'left'}}>
+                    <div className='text-center'>
+                        <Row style={{margin: 'auto'}}>
+                            <Col className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    FWS7
+                                </Button.Ripple>
                             </Col>
-                            <Col xl='12'>
-                                <Card className='text-center mb-1'>1-3. 통풍계통</Card>
+                            <CardBody>
+                                <Col className='d-flex'>
+                                    <Button.Ripple
+                                        color={'primary'}
+                                        outline
+                                        size='sm'
+                                        style={{width: '100%'}}
+                                    >
+                                        123
+                                    </Button.Ripple>
+                                </Col>
                                 <Card>
-                                    <CardBody style={{height: '200px'}} />
+                                    <CardBody style={{height:'455px'}}></CardBody>
                                 </Card>
-                            </Col>
+                                <Col className='d-flex'>
+                                    <Button.Ripple
+                                        color={'primary'}
+                                        outline
+                                        size='sm'
+                                        style={{width: '100%'}}
+                                    >
+                                        123
+                                    </Button.Ripple>
+                                </Col>
+                                <Card>
+                                    <CardBody style={{height:'200px'}}></CardBody>
+                                </Card>
+                            </CardBody>
                         </Row>
-                    </Col>
-                    <Col xl='2'>
-                        <Col xl='12'>
-                            <Card className='text-center mb-1'>3. 급수계통</Card>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height: '400px'}} />
-                        </Card>
-                    </Col>
-                    <Col xl='2'>
-                        <Col xl='12'>
-                            <Card className='text-center mb-1'>4. 복수계통</Card>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height: '400px'}} />
-                        </Card>
-                    </Col>
-                    <Col xl='2'>
-                        <Col xl='12'>
-                            <Card className='text-center mb-1'>5. 순환수 계통</Card>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height: '400px'}} />
-                        </Card>
-                    </Col>
-                    <Col xl='3'>
-                        <Row className='match-height'>
-                            <Col xl='12'>
-                                <Card className='text-center mb-1'>7-1. 압축설비계통</Card>
-                                <Card>
-                                    <CardBody style={{height: '200px'}} />
-                                </Card>
+                    </div>
+                </Col>
+
+                {/*---STG7---*/}
+                <Col xl='4' style={{float: 'left'}}>
+                    <div className='text-center'>
+                        <Row style={{margin: 'auto'}}>
+                            <Col className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    STG7
+                                </Button.Ripple>
                             </Col>
-                            <Col xl='12'>
-                                <Card className='text-center mb-1'>7-2. 압축설비계통</Card>
-                                <Card>
-                                    <CardBody style={{height: '200px'}} />
-                                </Card>
+
+                            <Row style={{margin: 'auto'}}>
+                                <CardBody>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>   
+                            </Row>
+                        </Row> 
+                    </div>  
+                </Col>
+
+                {/*---COS7---*/}
+                <Col xl='4' style={{float: 'left'}}>
+                    {/*---COS7---*/}
+                    <div className='text-center'>
+                        <Row style={{margin: 'auto'}}>
+                            <Col className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    COS7
+                                </Button.Ripple>
                             </Col>
-                        </Row>
-                    </Col>
-                </Row>
+
+                            <Row style={{margin: 'auto'}}>
+                                <CardBody>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'100px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'100px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Row>
+                        </Row> 
+                    </div>  
+
+                    {/*---WCS7---*/}
+                    <div className='text-center'>
+                        <Row style={{margin: 'auto'}}>
+                            <Col className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    WCS7
+                                </Button.Ripple>
+                            </Col>
+
+                            <Row style={{margin: 'auto'}}>
+                                <CardBody>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'100px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'100px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Row>
+                        </Row> 
+                    </div> 
+
+                    
+                    <div className='text-center'>
+                        <Row style={{margin: 'auto'}}>
+                            {/*---OAB7---*/}
+                            <Col xl='6' className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    COS7
+                                </Button.Ripple>
+                            </Col>
+                            {/*---OAB7---*/}
+                            <Col xl='6' className='d-flex'>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    block
+                                    size='sm'
+                                    >
+                                    COS7
+                                </Button.Ripple>
+                            </Col>
+
+                            <Row style={{margin: 'auto'}}>
+                                <CardBody>
+                                    <Row>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                        <Col xl='6' className='d-flex'>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                            >
+                                                123
+                                            </Button.Ripple>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col xl='6'>
+                                            <Card>
+                                                <CardBody style={{height:'200px'}}></CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Row>
+                        </Row> 
+                    </div>  
+                </Col>
             </div>
-            
         </Fragment>
     )
 }
