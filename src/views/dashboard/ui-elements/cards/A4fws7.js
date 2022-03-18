@@ -42,8 +42,8 @@ const A4FWS7 = (props) => {
                                     outline
                                     size='sm'
                                     style={{width: '100%'}}
-                                    onClick={() => linkToSubboard()}>
-                                    BFPT
+                                    onClick={() => linkToSubboard(equipment[10].equipmenttype)}>
+                                    {(equipment.length > 0) ? equipment[10].equipmenttype : ''}
                                 </Button.Ripple>
                             </CardBody>
                             <CardBody style={{ height: '470px' }}>
@@ -57,8 +57,8 @@ const A4FWS7 = (props) => {
                                     outline
                                     size='sm'
                                     style={{width: '100%'}}
-                                    onClick={() => linkToSubboard()}>
-                                    BFPM
+                                    onClick={() => linkToSubboard(equipment[11].equipmenttype)}>
+                                    {(equipment.length > 0) ? equipment[11].equipmenttype : ''}
                                 </Button.Ripple>
                             </CardBody>
                             <CardBody style={{ height: '200px' }}>
@@ -67,51 +67,6 @@ const A4FWS7 = (props) => {
                         </Card>
                    </div>
                 </Col>
-
-                 {/* <Col xl='2' style={{float: 'left'}}>
-            <div className='text-center'>
-                <Row style={{margin: 'auto'}}>
-                    <Col className='d-flex'>
-                        <Button.Ripple
-                            color={'primary'}
-                            block
-                            size='sm'
-                            >
-                            FWS7
-                        </Button.Ripple>
-                    </Col>
-                    <CardBody>
-                        <Col className='d-flex'>
-                            <Button.Ripple
-                                color={'primary'}
-                                outline
-                                size='sm'
-                                style={{width: '100%'}}
-                            >
-                                123
-                            </Button.Ripple>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height:'455px'}}></CardBody>
-                        </Card>
-                        <Col className='d-flex'>
-                            <Button.Ripple
-                                color={'primary'}
-                                outline
-                                size='sm'
-                                style={{width: '100%'}}
-                            >
-                                123
-                            </Button.Ripple>
-                        </Col>
-                        <Card>
-                            <CardBody style={{height:'200px'}}></CardBody>
-                        </Card>
-                    </CardBody>
-                </Row>
-            </div>
-        </Col> */}
-
         </Fragment>
     )
 }

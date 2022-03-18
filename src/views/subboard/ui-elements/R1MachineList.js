@@ -5,19 +5,10 @@ import Select from 'react-select'
 import { useSelector } from "react-redux"
 
 const R1MachineList = (props) => {
+    const history = useHistory()
     const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
     const equipmentData = useSelector((state) => state.equipment.equipment)
     const [equipmentid, setEquipmentid] = useState(null)
-    console.log('subprops', props)
-
-    const history = useHistory()
-
-    const linkToDashboard = useCallback(() => {
-        history.push({
-            pathname: '/dashboard'
-        })
-    }, [history])
-
     const [hierarchy, setHierarchy] = useState([])
     const [equipment, setEquipment] = useState([])
     const [equipmentTypeOption, setEquipmentTypeOption] = useState([])
@@ -35,6 +26,20 @@ const R1MachineList = (props) => {
         setEquipmentid(props.equipment)
     }, [props.equipment])
 
+
+    const linkToDashboard = useCallback(() => {
+        history.push({
+            pathname: '/dashboard'
+        })
+    }, [history])
+
+    const linkToDetailboard = useCallback((id) => {
+        history.push({
+            pathname: './detailmachine'
+        })
+    }, [history])
+
+
     // 첫 번째 select (Equipment Type)
     useEffect(() => {
         if (equipmentData.length > 0) {
@@ -46,7 +51,6 @@ const R1MachineList = (props) => {
                     label: item.equipmenttype
                 })
             })
-            console.log('select eq', selectETOptionList)
             setEquipmentTypeOption(selectETOptionList)
             setSelectETOption(selectETOptionList.find((item) => item.value === equipmentid))
         }
@@ -127,6 +131,15 @@ const R1MachineList = (props) => {
                                     setSelectEIdOption(value)
                                 }}
                             />
+                        </Col>
+                        <Col xl='6' />
+                        <Col className='col-1 d-flex'>
+                            <Button.Ripple 
+                                color={'primary'}
+                                block
+                                onClick={() => linkToDetailboard()}
+                            >
+                            Detail</Button.Ripple>
                         </Col>
                     </Row>
                 </CardBody>

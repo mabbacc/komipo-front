@@ -45,8 +45,9 @@ const A7OAB7 = (props) => {
                                             outline
                                             size='sm'
                                             style={{width: '100%'}}
+                                            onClick={() => linkToSubboard(equipment[15].equipmenttype)}
                                         >
-                                            OABP
+                                            {(equipment.length > 0) ? equipment[15].equipmenttype : ''}
                                         </Button.Ripple>
                                     </Col>
                                 </Row>
@@ -62,60 +63,6 @@ const A7OAB7 = (props) => {
                         </Card>
                     </div>
                 </Col>
-
-
-            {/* <div className='text-center'>
-                <Row style={{margin: 'auto'}}>
-                    <Col className='d-flex'>
-                        <Button.Ripple
-                            color={'primary'}
-                            block
-                            size='sm'
-                            >
-                            COS7
-                        </Button.Ripple>
-                    </Col>
-
-                    <Row style={{margin: 'auto'}}>
-                        <CardBody>
-                            <Row>
-                                <Col xl='6' className='d-flex'>
-                                    <Button.Ripple
-                                        color={'primary'}
-                                        outline
-                                        size='sm'
-                                        style={{width: '100%'}}
-                                    >
-                                        123
-                                    </Button.Ripple>
-                                </Col>
-                                <Col xl='6' className='d-flex'>
-                                    <Button.Ripple
-                                        color={'primary'}
-                                        outline
-                                        size='sm'
-                                        style={{width: '100%'}}
-                                    >
-                                        123
-                                    </Button.Ripple>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'100px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'100px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </CardBody>
-                    </Row>
-                </Row> 
-            </div>   */}
         </Fragment>
     )
 }

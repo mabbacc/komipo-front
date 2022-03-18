@@ -65,8 +65,8 @@ const A1CAS7 = (props) => {
                                 outline
                                 size='sm'
                                 style={{width: '100%'}}
-                                onClick={() => linkToSubboard()}>
-                                FDF
+                                onClick={() => linkToSubboard(equipment[0].equipmenttype)}>
+                                {(equipment.length > 0) ? equipment[0].equipmenttype : ''}
                             </Button.Ripple>
                         </CardBody>
                         <CardBody style={{ height: '200px' }}>
@@ -79,8 +79,8 @@ const A1CAS7 = (props) => {
                                 outline
                                 size='sm'
                                 style={{width: '100%'}}
-                                onClick={() => linkToSubboard()}>
-                                CIDF
+                                onClick={() => linkToSubboard(equipment[1].equipmenttype)}>
+                                {(equipment.length > 0) ? equipment[1].equipmenttype : ''}
                             </Button.Ripple>
                         </CardBody>
                         <CardBody style={{ height: '200px' }}>
@@ -93,8 +93,8 @@ const A1CAS7 = (props) => {
                                 outline
                                 size='sm'
                                 style={{width: '100%'}}
-                                onClick={() => linkToSubboard()}>
-                                PAF
+                                onClick={() => linkToSubboard(equipment[2].equipmenttype)}>
+                                {(equipment.length > 0) ? equipment[2].equipmenttype : ''}
                             </Button.Ripple>
                         </CardBody>
                         <CardBody style={{ height: '200px' }}>
@@ -104,64 +104,6 @@ const A1CAS7 = (props) => {
 
                 </div>
             </Col>
-
-           {/* <Col xl='2' style={{float: 'left'}}>
-                    <div className='text-center'>
-                        <Row style={{margin: 'auto'}}>
-                            <Col className='d-flex'>
-                                <Button.Ripple
-                                    color={'primary'}
-                                    block
-                                    size='sm'
-                                    >
-                                    CAS7
-                                </Button.Ripple>
-                            </Col>
-                            <CardBody>
-                                <Col className='d-flex'>
-                                    <Button.Ripple
-                                        color={'primary'}
-                                        outline
-                                        size='sm'
-                                        style={{width: '100%'}}
-                                    >
-                                        123
-                                    </Button.Ripple>
-                                </Col>
-                                <Card>
-                                    <CardBody style={{height:'200px'}}></CardBody>
-                                </Card>
-                                <Col className='d-flex'>
-                                    <Button.Ripple
-                                        color={'primary'}
-                                        outline
-                                        size='sm'
-                                        style={{width: '100%'}}
-                                    >
-                                        123
-                                    </Button.Ripple>
-                                </Col>
-                                <Card>
-                                    <CardBody style={{height:'200px'}}></CardBody>
-                                </Card>
-                                <Col className='d-flex'>
-                                    <Button.Ripple
-                                        color={'primary'}
-                                        outline
-                                        size='sm'
-                                        style={{width: '100%'}}
-                                    >
-                                        123
-                                    </Button.Ripple>
-                                </Col>
-                                <Card>
-                                    <CardBody style={{height:'200px'}}></CardBody>
-                                </Card>
-                            </CardBody>
-                        </Row>
-                    </div>
-                </Col> */}
-
         </Fragment>
     )
 }

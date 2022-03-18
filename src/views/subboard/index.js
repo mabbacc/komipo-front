@@ -7,12 +7,11 @@ import { getHierarchy } from '@store/hierarchy'
 import { getEquipment } from '@store/equipment'
 
 
-const SubboardIndex = ({location}) => {
+const SubboardIndex = ({ location }) => {
     const dispatch = useDispatch()
     const { hierarchy } = useSelector(state => state.hierarchy)
     const { equipment } = useSelector(state => state.equipment)
     const [equipmenttype, setEquipmenttype] = useState(null)
-    console.log('location', location)
   
     useEffect(() => {
       if (hierarchy.length === 0) {
