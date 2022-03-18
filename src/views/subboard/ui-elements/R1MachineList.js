@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 
 const R1MachineList = () => {
     const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
-    // console.log('hierarchyStore', hierarchyData)
+    console.log('hierarchyStore', hierarchyData)
     const history = useHistory()
 
     const linkToDashboard = useCallback(() => {
@@ -21,58 +21,52 @@ const R1MachineList = () => {
     const [selectETOption, setSelectETOption] = useState(null)
     const [selectEIdOption, setSelectEIdOption] = useState(null)
 
-    // useEffect(() => {
-    //     setHierarchy(hierarchyData)
-    // }, [hierarchyData])
-
     useEffect(() => {
-        const hierarchyAreaId = []
-
-        hierarchyData.forEach((item) => {
-            hierarchyAreaId.push({
-                value: item.areakey,
-                label: item.areaid
-            })
-        })
-        setHierarchy(hierarchyAreaId)
+        setHierarchy(hierarchyData)
     }, [hierarchyData])
    
 
     // 첫 번째 select (Equipment Type)
     useEffect(() => {
-        const selectETOptionList = []
-    
-        hierarchyData.forEach((item) => {
-            (item.child).forEach((item) => {
-                const newItem = {
-                    value: item.equipmenttype,
-                    label: item.equipmenttype
-                }
-                if (selectETOptionList.filter(e => e.value === item.equipmenttype).length <= 0) {
-                  selectETOptionList.push(newItem)
-                }
+        if (hierarchyData.length > 0) {
+            const selectETOptionList = []
+        
+            hierarchyData.forEach((item) => {
+                (item.child).forEach((item) => {
+                    const newItem = {
+                        value: item.equipmenttype,
+                        label: item.equipmenttype
+                    }
+                    if (selectETOptionList.filter(e => e.value === item.equipmenttype).length <= 0) {
+                      selectETOptionList.push(newItem)
+                    }
+                })
             })
-        })
-        setEquipmentTypeOption(selectETOptionList)
-        setSelectETOption(selectETOptionList[0])
+            setEquipmentTypeOption(selectETOptionList)
+            setSelectETOption(selectETOptionList[0])
+        }
     }, [hierarchy])
 
     // Equipment Type의 변화에 따른 Equipmentid select
     useEffect(() => {
-        const selectEIdOptionList = []
-
-        hierarchyData.forEach((item) => {
-            (item.child).forEach((item) => {
-                if (item.equipmenttype === selectETOption.value) {
-                    selectEIdOptionList.push({
-                        value: item.equipmentkey,
-                        label: item.equipmentid
-                    })
-                }
-            })
-        }) 
-        setEquipmentIdOption(selectEIdOptionList)
-        setSelectEIdOption(selectEIdOptionList[0])    
+            const selectEIdOptionList = []
+    
+            hierarchyData.forEach((item) => {
+                (item.child).forEach((item) => {
+                    console.log('equipmenttype', item.equipmenttype)
+                    console.log('select', selectETOption)
+                    if (selectETOption !== null && selectETOption !== undefined) {
+                        if (item.equipmenttype === selectETOption.value) {
+                            selectEIdOptionList.push({
+                                value: item.equipmentkey,
+                                label: item.equipmentid
+                            })
+                        }
+                    }
+                })
+            }) 
+            setEquipmentIdOption(selectEIdOptionList)
+            setSelectEIdOption(selectEIdOptionList[0])        
     }, [hierarchy, selectETOption])
     
     return (
