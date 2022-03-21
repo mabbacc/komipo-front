@@ -36,30 +36,29 @@ const A6COM7 = (props) => {
                             COM7
                         </Button.Ripple>
 
-                        <Card style={{ height: '242px' }}>
+                        <Card>
                             <CardBody style={{padding: '0.5rem 1rem'}}>
                                 <Row>
-                                    <Col className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[14].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[14].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
+                                    {equipment.length > 0 ? equipment.filter((e) => e.areaid === 'COM7').map((e, index) => (
+                                        <Col key={'COM7-' + index}>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                                onClick={() => linkToSubboard(e.equipmenttype)}
+                                            >
+                                                {(equipment.length > 0) ? e.equipmenttype : ''}
+                                            </Button.Ripple>
+                                            <Row>
+                                                <Col>
+                                                    <CardBody style={{height: '200px'}}></CardBody>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                     )) : ''}
                                 </Row>
                             </CardBody>
-                            <Row>
-                                <Col>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                                
-                            </Row>
                         </Card>
                     </div>
                 </Col>

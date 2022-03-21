@@ -36,34 +36,21 @@ const A4FWS7 = (props) => {
                         </Button.Ripple>
 
                         <Card style={{ height: '820px' }}>
-                            <CardBody style={{padding: '0.5rem 1rem'}}>
-                                <Button.Ripple
-                                    color={'primary'}
-                                    outline
-                                    size='sm'
-                                    style={{width: '100%'}}
-                                    onClick={() => linkToSubboard(equipment[10].equipmenttype)}>
-                                    {(equipment.length > 0) ? equipment[10].equipmenttype : ''}
-                                </Button.Ripple>
-                            </CardBody>
-                            <CardBody style={{ height: '470px' }}>
-                                {/* <Chart options={options} series={options.series} type='donut'height='180px'/> */}
-                            </CardBody>
-
-
-                            <CardBody style={{padding: '0.5rem 1rem'}}>
-                                <Button.Ripple
-                                    color={'primary'}
-                                    outline
-                                    size='sm'
-                                    style={{width: '100%'}}
-                                    onClick={() => linkToSubboard(equipment[11].equipmenttype)}>
-                                    {(equipment.length > 0) ? equipment[11].equipmenttype : ''}
-                                </Button.Ripple>
-                            </CardBody>
-                            <CardBody style={{ height: '200px' }}>
-                                {/* <Chart options={options} series={options.series} type='donut' height='180px'/> */}
-                            </CardBody>
+                            {equipment.length > 0 ? equipment.filter((e) => e.areaid === 'FWS7').map((e, index) => (
+                                <CardBody style={{padding: '0.5rem 1rem'}} key={'FWS7-' + index}>
+                                    <Button.Ripple
+                                        color={'primary'}
+                                        outline
+                                        size='sm'
+                                        style={{width: '100%'}}
+                                        onClick={() => linkToSubboard(e.equipmenttype)}>
+                                        {(equipment.length > 0) ? e.equipmenttype : ''}
+                                    </Button.Ripple>
+                                    <CardBody style={{ height: '505px' }}>
+                                        {/* <Chart options={options} series={options.series} type='donut'height='180px'/> */}
+                                    </CardBody>
+                                </CardBody>
+                            )) : ''}
                         </Card>
                    </div>
                 </Col>

@@ -37,105 +37,28 @@ const A3STG7 = (props) => {
                         <Card style={{ height: '820px' }}>
                             <CardBody style={{padding: '0.5rem 1rem'}}>
                                 <Row>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[5].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[5].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[6].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[6].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
+                                    {equipment.length > 0 ? equipment.filter((e) => e.areaid === 'STG7').map((e, index) => (
+                                        <Col xl='6' key={'STG7-' + index}>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{ width: '100%' }}
+                                                onClick={() => linkToSubboard(e.equipmenttype)}
+                                            >
+                                                {(equipment.length > 0) ? e.equipmenttype : ''}
+                                            </Button.Ripple>
+                                            <Row>
+                                                <Col>
+                                                    <Card>
+                                                        <CardBody style={{height:'217px'}}></CardBody>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </Col>   
+                                    )) : ''}
                                 </Row>
                             </CardBody>
-                            <Row>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-
-
-                            <CardBody style={{padding: '0.5rem 1rem'}}>
-                                <Row>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[7].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[7].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[8].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[8].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
-                                </Row>
-                            </CardBody>
-                            <Row>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-
-                            <CardBody style={{padding: '0.5rem 1rem'}}>
-                                <Row>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[9].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[9].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
-                                </Row>
-                            </CardBody>
-                            <Row>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
                         </Card>
                     </div>
                 </Col>

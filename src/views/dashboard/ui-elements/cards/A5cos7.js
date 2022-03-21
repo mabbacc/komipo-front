@@ -23,6 +23,29 @@ const A5COS7 = (props) => {
         })
     },[history, equipment])
 
+    const options = {
+        series: [44, 55, 41, 17, 15],
+        chart: {
+        type: 'donut'
+      },
+      legend: {
+        show: false
+      },
+      responsive: [
+          {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    ]
+    }
+
     return (
         <Fragment>
             <Col style={{float: 'left', height: '280px', width: '33%'}}>
@@ -35,45 +58,29 @@ const A5COS7 = (props) => {
                             {(hierarchy !== undefined) ? hierarchy.areaid : ''}
                         </Button.Ripple>
 
-                        <Card style={{ height: '242px' }}>
+                        <Card>
                             <CardBody style={{padding: '0.5rem 1rem'}}>
                                 <Row>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[12].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[12].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
-                                    <Col xl='6' className='d-flex'>
-                                        <Button.Ripple
-                                            color={'primary'}
-                                            outline
-                                            size='sm'
-                                            style={{width: '100%'}}
-                                            onClick={() => linkToSubboard(equipment[13].equipmenttype)}
-                                        >
-                                            {(equipment.length > 0) ? equipment[13].equipmenttype : ''}
-                                        </Button.Ripple>
-                                    </Col>
+                                    {equipment.length > 0 ? equipment.filter((e) => e.areaid === 'COS7').map((e, index) => (
+                                        <Col xl='6' key={'COS7-' + index}>
+                                            <Button.Ripple
+                                                color={'primary'}
+                                                outline
+                                                size='sm'
+                                                style={{width: '100%'}}
+                                                onClick={() => linkToSubboard(e.equipmenttype)}
+                                            >
+                                                {(equipment.length > 0) ? e.equipmenttype : ''}
+                                            </Button.Ripple>
+                                            <Row>
+                                                <Col>
+                                                    <CardBody><Chart options={options} series={options.series} type='donut'height='180px'/></CardBody>
+                                                </Col>
+                                            </Row>
+                                        </Col>   
+                                    )) : ''}
                                 </Row>
                             </CardBody>
-                            <Row>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xl='6'>
-                                    <Card>
-                                        <CardBody style={{height:'200px'}}></CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
                         </Card>
                     </div>
                 </Col>

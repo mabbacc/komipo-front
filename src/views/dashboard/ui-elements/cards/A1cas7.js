@@ -58,50 +58,24 @@ const A1CAS7 = (props) => {
                         {(hierarchy !== undefined) ? hierarchy.areaid : ''}    
                     </Button.Ripple>
 
-                    <Card style={{ height: '820px' }}>
-                        <CardBody style={{padding: '0.5rem 1rem'}}>
-                            <Button.Ripple
-                                color={'primary'}
-                                outline
-                                size='sm'
-                                style={{width: '100%'}}
-                                onClick={() => linkToSubboard(equipment[0].equipmenttype)}>
-                                {(equipment.length > 0) ? equipment[0].equipmenttype : ''}
-                            </Button.Ripple>
-                        </CardBody>
-                        <CardBody style={{ height: '200px' }}>
-                            <Chart options={options} series={options.series} type='donut'height='180px'/>
-                        </CardBody>
-
-                        <CardBody style={{padding: '0.5rem 1rem'}}>
-                            <Button.Ripple
-                                color={'primary'}
-                                outline
-                                size='sm'
-                                style={{width: '100%'}}
-                                onClick={() => linkToSubboard(equipment[1].equipmenttype)}>
-                                {(equipment.length > 0) ? equipment[1].equipmenttype : ''}
-                            </Button.Ripple>
-                        </CardBody>
-                        <CardBody style={{ height: '200px' }}>
-                            <Chart options={options} series={options.series} type='donut' height='180px'/>
-                        </CardBody>
-
-                        <CardBody style={{padding: '0.5rem 1rem'}}>
-                            <Button.Ripple
-                                color={'primary'}
-                                outline
-                                size='sm'
-                                style={{width: '100%'}}
-                                onClick={() => linkToSubboard(equipment[2].equipmenttype)}>
-                                {(equipment.length > 0) ? equipment[2].equipmenttype : ''}
-                            </Button.Ripple>
-                        </CardBody>
-                        <CardBody style={{ height: '200px' }}>
-                            <Chart options={options} series={options.series} type='donut' height='180px'/>
-                        </CardBody>
+                    <Card style={{ height: '820px' }} >
+                        {equipment.length > 0 ? equipment.filter((e) => e.areaid === 'CAS7').map((e, index) => (
+                            <CardBody style={{padding: '0.5rem 1rem'}} key={'CAS7-' + index}>
+                                <Button.Ripple
+                                    color={'primary'}
+                                    outline
+                                    size='sm'
+                                    style={{width: '100%'}}
+                                    onClick={() => linkToSubboard(e.equipmenttype)}>
+                                    {(equipment.length > 0) ? e.equipmenttype : ''}
+                                    {/* {(equipment.length > 0) ? equipment[0].equipmenttype : ''} */}
+                                </Button.Ripple>
+                                <CardBody style={{ height: '200px' }}>
+                                    <Chart options={options} series={options.series} type='donut'height='180px'/>
+                                </CardBody>
+                            </CardBody>
+                        )) : ''}
                     </Card>
-
                 </div>
             </Col>
         </Fragment>
