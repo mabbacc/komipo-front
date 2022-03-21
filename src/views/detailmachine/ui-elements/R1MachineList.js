@@ -6,57 +6,55 @@ import Select from 'react-select'
 import AnalysisContainer from '../modal/AnalysisContainer'
 import { useSelector } from "react-redux"
 
-const R1MachineList = () => {
-    const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
+const R1MachineList = (props) => {
     const history = useHistory()
+    const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
+    const equipmentData = useSelector((state) => state.equipment.equipment)
     const [modal, setModal] = useState(false)
-
+    const [hierarchy, setHierarchy] = useState([])
+    const [equipment, setEquipment] = useState([])
+    const [equipmentTypeOption, setEquipmentTypeOption] = useState([])
+    const [equipmentIdOption, setEquipmentIdOption] = useState([])
+    const [selectETOption, setSelectETOption] = useState(null)
+    const [selectEIdOption, setSelectEIdOption] = useState(null) 
+    
     const linkToDashboard = useCallback(() => {
         history.push({
             pathname: '/dashboard'
         })
     },
     [history])
-
-    const [hierarchy, setHierarchy] = useState([])
-    const [equipmentTypeOption, setEquipmentTypeOption] = useState([])
-    const [equipmentIdOption, setEquipmentIdOption] = useState([])
-    const [selectETOption, setSelectETOption] = useState(null)
-    const [selectEIdOption, setSelectEIdOption] = useState(null)
-
+    
+    
     useEffect(() => {
         setHierarchy(hierarchyData)
-    }, [hierarchyData])
-   
+        setEquipment(equipmentData)
+    }, [hierarchyData, equipmentData])
+    
+    
     // 첫 번째 select (Equipment Type)
     useEffect(() => {
-        if (hierarchyData.length > 0) {
+        if (equipmentData.length > 0 && props.equipmenttype !== null) {
             const selectETOptionList = []
-        
-            hierarchyData.forEach((item) => {
-                (item.child).forEach((item) => {
-                    const newItem = {
-                        value: item.equipmenttype,
-                        label: item.equipmenttype
-                    }
-                    if (selectETOptionList.filter(e => e.value === item.equipmenttype).length <= 0) {
-                    selectETOptionList.push(newItem)
-                    }
+            
+            equipmentData.forEach((item) => {
+                selectETOptionList.push({
+                    value: item.equipmenttype,
+                    label: item.equipmenttype
                 })
             })
             setEquipmentTypeOption(selectETOptionList)
-            setSelectETOption(selectETOptionList[0])
+            setSelectETOption(selectETOptionList.find((item) => item.value === props.equipmenttype.value))
         }
-    }, [hierarchy])
-
+    }, [equipment, props])
+    
     // Equipment Type의 변화에 따른 Equipmentid select
     useEffect(() => {
+        if (equipmentData.length > 0) {
             const selectEIdOptionList = []
-
+            
             hierarchyData.forEach((item) => {
                 (item.child).forEach((item) => {
-                    console.log('equipmenttype', item.equipmenttype)
-                    console.log('select', selectETOption)
                     if (selectETOption !== null && selectETOption !== undefined) {
                         if (item.equipmenttype === selectETOption.value) {
                             selectEIdOptionList.push({
@@ -68,9 +66,11 @@ const R1MachineList = () => {
                 })
             }) 
             setEquipmentIdOption(selectEIdOptionList)
-            setSelectEIdOption(selectEIdOptionList[0])        
-    }, [hierarchy, selectETOption])
-
+            setSelectEIdOption(selectEIdOptionList.find((item) => item.value === props.equipmentid.value) || selectEIdOptionList[0])        
+        }
+    }, [equipment, selectETOption])
+    
+    
     const closeModal = () => {
         setModal(!modal)
     }
@@ -121,7 +121,6 @@ const R1MachineList = () => {
                                 color={'primary'}
                                 block
                                 onClick={() => setModal(!modal)}
-                                
                             >
                                 Analysis chart
                             </Button.Ripple>
@@ -130,7 +129,7 @@ const R1MachineList = () => {
                 </CardBody>
             </Card>
 
-            <AnalysisContainer modal={modal} closeModal={closeModal} />
+            <AnalysisContainer modal={modal} closeModal={closeModal} equipmentid={selectEIdOption}/>
         </Fragment>
     )
 }

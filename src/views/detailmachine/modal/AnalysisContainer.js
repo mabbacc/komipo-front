@@ -10,8 +10,6 @@ import A6Statistic from "./component/A6Statistic"
 
 
 const AnalysisContainer = (props) => {
-    //eslint-disable-next-line
-    //const [modal, setModal] = useState(false)
     const [activeTab, setActiveTab] = useState('1')
 
     const toggleTabs = tab => {
@@ -19,12 +17,6 @@ const AnalysisContainer = (props) => {
             setActiveTab(tab)
         }
     }
-
-    // const closeModal = () => {
-    //     console.log('props.modal', props.modal)
-    //     console.log('!(props.modal)', !(props.modal))
-    //     setModal(!(props.modal))
-    // }
     
     return (
         <Modal isOpen={props.modal} className='modal-dialog-centered modal-xl'>
@@ -105,10 +97,10 @@ const AnalysisContainer = (props) => {
             <ModalBody>
                 <TabContent activeTab={activeTab}>
                     <TabPane tabId='1'>
-                        <A0TrendLevel />
+                        <A0TrendLevel equipmentid={props.equipmentid}/>
                     </TabPane>
                     <TabPane tabId='2'>
-                        <A1MultiTrace />
+                        <A1MultiTrace equipmentid={props.equipmentid}/>
                     </TabPane>
                     <TabPane tabId='3'>
                         <A2OrbitWaveform />

@@ -6,7 +6,7 @@ import { BiRightArrow, BiLeftArrow } from 'react-icons/bi'
 import Select from 'react-select'
 import moment from 'moment'
 
-const CalendarPeriodSetting = () => {
+const CalendarPeriodSetting = (props) => {
     const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
     const [endDate, setEndDate] = useState(moment(new Date()))
     const selectOption = [ 
@@ -71,7 +71,7 @@ const CalendarPeriodSetting = () => {
     }
 
     return (
-<Fragment>
+        <Fragment>
             <Row>
                 <Col>
                     <Card>
@@ -123,7 +123,8 @@ const CalendarPeriodSetting = () => {
                                         classNamePrefix = 'select'
                                         options = {selectOption}
                                         menuPlacement = 'auto'
-                                        onChange = {changeValue}
+                                        // onChange = {changeValue}
+                                        onChange={e => { changeValue(e); props.setItvValue(e.value) }}
                                         value = {selected}
                                     >
                                     </Select>

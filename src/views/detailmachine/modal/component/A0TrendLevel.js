@@ -5,42 +5,96 @@ import Select from 'react-select'
 import axios from 'axios'
 import moment from 'moment'
 import { toast } from 'react-toastify'
+import ErrorToast from '../../../toast/ErrorToast'
 import { useSelector } from 'react-redux'
 import CalendarPeriodSetting from './CalendarPeriodSetting'
 
-const A0TrendLevel = () => {
-  const hierarchyStore = useSelector((state) => state.hierarchy)
-  console.log('hierarchyStore', hierarchyStore)
+const A0TrendLevel = (props) => {
+  const { hierarchy } = useSelector(state => state.hierarchy)
+  const { equipment } = useSelector(state => state.equipment)
+
+  // mptkey
+  const [mptOption, setMptOption] = useState([])
+  const [selectMptOption, setSelectMptOption] = useState([])
+  const [pairMptValue, setPairMptValue] = useState(null)
+
+  // itv
+  const [itvValue, setItvValue] = useState('1 Week')
+  console.log(itvValue)
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
-  const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X' }
+  
 
   const source = axios.CancelToken.source()
 
+  // mpt select option
   useEffect(() => {
-    if (0 === hierarchy.length) {
-      dispatch(getHierarchy())
+    if (equipment.length > 0) {
+      const selectMptOptionList = []
+
+      equipment.forEach((item) => {
+        (item.child).forEach((item) => {
+          if (item.equipmentid === props.equipmentid.label) {
+            (item.child).forEach((item) => {
+              (item.child).forEach((item) => {
+                selectMptOptionList.push({
+                  value: item.mptkey,
+                  label: item.description
+                  //label: item.mptid
+                })
+              })
+            })
+          }
+        })
+      })
+      setMptOption(selectMptOptionList)
+      setSelectMptOption(selectMptOptionList[0])
     }
-    axios
-      .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/trend', {
-        cancelToken: source.token
+  }, [equipment, props])
+
+  // pair mpt value
+  useEffect(() => {
+    if (equipment.length > 0) {
+      equipment.forEach((item) => {
+        (item.child).forEach((item) => {
+          (item.child).forEach((item) => {
+            (item.child).forEach((item) => {
+              if (selectMptOption.value === item.companionmptkey) {
+                setPairMptValue(item.description)
+              }
+            })
+          })
+        })
       })
-      .then((res) => {
-        setChartData(res.data)
-        console.log('Trend Level', res.data)
-      })
-      .catch((error) => {
-        if (axios.isCancel(error)) {
-          console.log('Cancel Loading')
-        } else {
-          toast.warning(<ErrorToast msg={'에러가 발생했습니다.[' + error.message + ']'} />, { autoClose: 3000 })
+    }
+  }, [equipment, selectMptOption])
+
+  useEffect(() => {
+    if (selectMptOption.value !== undefined) { 
+      axios
+        .get(process.env.REACT_APP_API_SERVER_URL + 
+          '/front/detail-analysis/trend?mptkey=' + 
+          selectMptOption.value + 
+          '&itv=1 months&end_dt=2019-11-08'
+        , {
+          cancelToken: source.token
+        })
+        .then((res) => {
+          setChartData(res.data)
+        })
+        .catch((error) => {
+          if (axios.isCancel(error)) {
+            console.log('Cancel Loading')
+          } else {
+            toast.warning(<ErrorToast msg={'에러가 발생했습니다.[' + error.message + ']'} />, { autoClose: 3000 })
+          }
+        })
+        return () => {
+          source.cancel('Canceling in cleanup')
         }
-      })
-    return () => {
-      source.cancel('Canceling in cleanup')
-    }
-  }, [])
+      } 
+    }, [selectMptOption])
 
   useEffect(() => {
     const chart = {
@@ -64,7 +118,7 @@ const A0TrendLevel = () => {
           show: true,
           position: 'right',
           offsetY: 200,
-          customLegendItems: ['PAF-A pk-pk Motor Inbord X', 'PAF-A pk-pk Motor Inbord Y']
+          customLegendItems: [selectMptOption.label, pairMptValue]
         },
         dataLabels: {
           enabled: false
@@ -95,7 +149,7 @@ const A0TrendLevel = () => {
           },
           labels: {
             formatter: (val, index) => {
-              if (val !== undefined) return val.toFixed(0)
+              if (val !== undefined) return val
             }
           }
         }
@@ -123,13 +177,21 @@ const A0TrendLevel = () => {
             <CardBody>
               <Row>
                 <Col xl="1">
-                  <div className="form-control">PAF-A</div>
+                  <div className="form-control">{props.equipmentid.label}</div>
                 </Col>
                 <Col xl="2">
-                  <Select defaultValue={selectOption} />
+                  <Select 
+                    className='react-select'
+                    classNamePrefix='select'
+                    value={selectMptOption}
+                    options={mptOption}
+                    onChange={(value) => {
+                      setSelectMptOption(value)
+                    }}
+                    />
                 </Col>
                 <Col xl="2">
-                  <div className="form-control">MOTOR Outboard VIB - Y</div>
+                  <div className="form-control">{pairMptValue}</div>
                 </Col>
               </Row>
             </CardBody>
@@ -152,7 +214,7 @@ const A0TrendLevel = () => {
         </Col>
       </Row>
 
-      <CalendarPeriodSetting />
+      <CalendarPeriodSetting setItvValue={setItvValue}/>
 
     </Fragment>
   )

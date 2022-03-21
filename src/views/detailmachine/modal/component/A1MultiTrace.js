@@ -5,10 +5,13 @@ import A1aParameterTrend from "./graphs/A1aParameterTrend"
 import A1bParameterTrend from "./graphs/A1bParameterTrend"
 import axios from "axios"
 import CalendarPeriodSetting from "./CalendarPeriodSetting"
+import { useSelector } from "react-redux"
 
-const A1MultiTrace = () => {
+const A1MultiTrace = (props) => {
+    const { equipment } = useSelector(state => state.equipment)
     const [chartData, setChartData] = useState([])
-    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+    const [mptOpton, setMptOption] = useState([])
+    const [selectMptOption, setSelectMptOption] = useState([])
 
     useEffect(() => {
         axios
@@ -20,6 +23,31 @@ const A1MultiTrace = () => {
             console.log('chartData', chartData)
       }, [])
 
+    // mpt select option
+    useEffect(() => {
+        if (equipment.length > 0) {
+            const selectMptOptionList = []
+
+            equipment.forEach((item) => {
+                (item.child).forEach((item) => {
+                    if (item.equipmentid === props.equipmentid.label) {
+                        (item.child).forEach((item) => {
+                            (item.child).forEach((item) => {
+                                selectMptOptionList.push({
+                                    value: item.mptkey,
+                                    label: item.description
+                                })
+                            })
+                        })
+                    }
+                })
+            })
+            setMptOption(selectMptOptionList)
+            setSelectMptOption(selectMptOptionList[0])
+        }
+    }, [equipment, props])
+
+
     return (
         <Fragment>
             <Row>
@@ -28,11 +56,17 @@ const A1MultiTrace = () => {
                         <CardBody>
                             <Row>
                                 <Col xl='1'>
-                                    <div className="form-control">PAF-A</div>
+                                    <div className="form-control">{props.equipmentid.label}</div>
                                 </Col>
                                 <Col xl='2'>
-                                    <Select 
-                                        defaultValue={selectOption}
+                                    <Select
+                                        className='react-select'
+                                        classNamePrefix='select'
+                                        value={selectMptOption}
+                                        options={mptOpton}
+                                        onChange={(value) => {
+                                            setSelectMptOption(value)
+                                        }}
                                     />
                                 </Col>
                             </Row>
