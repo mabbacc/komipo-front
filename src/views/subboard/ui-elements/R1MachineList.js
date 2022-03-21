@@ -8,23 +8,20 @@ const R1MachineList = (props) => {
     const history = useHistory()
     const hierarchyData = useSelector((state) => state.hierarchy.hierarchy)
     const equipmentData = useSelector((state) => state.equipment.equipment)
-    const [equipmentid, setEquipmentid] = useState(null)
     const [hierarchy, setHierarchy] = useState([])
     const [equipment, setEquipment] = useState([])
+    const [equipmentid, setEquipmentid] = useState(null)
     const [equipmentTypeOption, setEquipmentTypeOption] = useState([])
     const [equipmentIdOption, setEquipmentIdOption] = useState([])
     const [selectETOption, setSelectETOption] = useState(null)
     const [selectEIdOption, setSelectEIdOption] = useState(null)
 
+
     useEffect(() => {
         setHierarchy(hierarchyData)
         setEquipment(equipmentData)
-    }, [hierarchyData, equipmentData])
-
-
-    useEffect(() => {
         setEquipmentid(props.equipment)
-    }, [props.equipment])
+    }, [hierarchyData, equipmentData, props.equipment])
 
 
     const linkToDashboard = useCallback(() => {
@@ -33,11 +30,15 @@ const R1MachineList = (props) => {
         })
     }, [history])
 
-    const linkToDetailboard = useCallback((id) => {
+    const linkToDetailboard = useCallback((type, id) => {
         history.push({
-            pathname: './detailmachine'
+            pathname: './detailmachine',
+            state: {
+                equipmenttype: type, 
+                equipmentid: id
+            }
         })
-    }, [history])
+    }, [history, equipmentData])
 
 
     // 첫 번째 select (Equipment Type)
@@ -79,6 +80,7 @@ const R1MachineList = (props) => {
 
     // Equipment Type의 변화에 따른 Equipmentid select
     useEffect(() => {
+        if (equipmentData.length > 0) {
             const selectEIdOptionList = []
     
             hierarchyData.forEach((item) => {
@@ -95,7 +97,8 @@ const R1MachineList = (props) => {
             }) 
             setEquipmentIdOption(selectEIdOptionList)
             setSelectEIdOption(selectEIdOptionList[0])        
-    }, [hierarchy, selectETOption])
+        }
+    }, [equipment, selectETOption])
     
     return (
         <Fragment>
@@ -137,7 +140,7 @@ const R1MachineList = (props) => {
                             <Button.Ripple 
                                 color={'primary'}
                                 block
-                                onClick={() => linkToDetailboard()}
+                                onClick={() => linkToDetailboard(selectETOption, selectEIdOption)}
                             >
                             Detail</Button.Ripple>
                         </Col>
