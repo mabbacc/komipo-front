@@ -29,6 +29,9 @@ const A2cOrbit = (props) => {
           curve: 'straight',
           width: 2
         },
+        noData: {
+          text: 'No Data'
+        },
         tooltip: {
           y: {
             formatter: (value, { series, seriesIndex, dataPointIndex, w }) => {

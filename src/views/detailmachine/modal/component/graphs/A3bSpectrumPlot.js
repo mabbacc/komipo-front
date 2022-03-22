@@ -29,6 +29,9 @@ const A3bSpectrumPlot = (props) => {
         stroke: {
           width: 2
         },
+        noData: {
+          text: 'No Data'
+        },
         dataLabels: {
           enabled: false
         },
