@@ -1,7 +1,7 @@
 import Flatpickr from 'react-flatpickr'
 // import rangePlugin from 'flatpickr/dist/plugins/rangePlugin'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Col, Row, Card, CardBody, CardTitle, Button } from "reactstrap"
 import ComparativeTrendChart from "./ComparativeTrendChart"
 import Select from 'react-select'
@@ -19,57 +19,76 @@ const R3ComparativeTrend = () => {
         { value: '6 Month', label: '6 Month'}
     ]
     const [selected, setSelected] = useState(selectOption[0])
-  
+    
     const clickCurrent = () => {
-        setStartDate(moment(new Date()))
+        // setStartDate(moment(new Date()))
+        // setEndDate(moment(new Date()))
+        setStartDate(moment(new Date()).subtract(7, 'days'))
         setEndDate(moment(new Date()))
+        setSelected(selectOption[0])
     }
 
     const changeValue = (e) => { 
         if (e.value === '1 Week') {
-            setStartDate(moment(endDate._d).subtract(7, 'days'))
+            setStartDate(moment(endDate).subtract(7, 'days'))
             setSelected(selectOption[0])
         } else if (e.value === '1 Month') {
-            setStartDate(moment(endDate._d).subtract(1, 'months'))
+            setStartDate(moment(endDate).subtract(1, 'months'))
             setSelected(selectOption[1])
         } else if (e.value === '3 Month') {
-            setStartDate(moment(endDate._d).subtract(3, 'months'))
+            setStartDate(moment(endDate).subtract(3, 'months'))
             setSelected(selectOption[2])
         } else if (e.value === '6 Month') {
-            setStartDate(moment(endDate._d).subtract(6, 'months'))
+            setStartDate(moment(endDate).subtract(6, 'months'))
             setSelected(selectOption[3])
         }
     }
 
     const clickLeft = () => {
         if (selected.value === '1 Week') {
-            setStartDate(moment(startDate._d).subtract(7, 'days'))
-            setEndDate(moment(endDate._d).subtract(7, 'days'))
+            setStartDate(moment(startDate).subtract(7, 'days'))
+            setEndDate(moment(endDate).subtract(7, 'days'))
         } else if (selected.value === '1 Month') {
-            setStartDate(moment(startDate._d).subtract(1, 'months'))
-            setEndDate(moment(endDate._d).subtract(1, 'months'))
+            setStartDate(moment(startDate).subtract(1, 'months'))
+            setEndDate(moment(endDate).subtract(1, 'months'))
         } else if (selected.value === '3 Month') {
-            setStartDate(moment(startDate._d).subtract(3, 'months'))
-            setEndDate(moment(endDate._d).subtract(3, 'months'))
+            setStartDate(moment(startDate).subtract(3, 'months'))
+            setEndDate(moment(endDate).subtract(3, 'months'))
         } else if (selected.value === '6 Month') {
-            setStartDate(moment(startDate._d).subtract(6, 'months'))
-            setEndDate(moment(endDate._d).subtract(6, 'months'))
+            setStartDate(moment(startDate).subtract(6, 'months'))
+            setEndDate(moment(endDate).subtract(6, 'months'))
         }
     }
 
     const clickRight = () => {
         if (selected.value === '1 Week') {
-            setStartDate(moment(startDate._d).add(7, 'days'))
-            setEndDate(moment(endDate._d).add(7, 'days'))
+            setStartDate(moment(startDate).add(7, 'days'))
+            setEndDate(moment(endDate).add(7, 'days'))
         } else if (selected.value === '1 Month') {
-            setStartDate(moment(startDate._d).add(1, 'months'))
-            setEndDate(moment(endDate._d).add(1, 'months'))
+            setStartDate(moment(startDate).add(1, 'months'))
+            setEndDate(moment(endDate).add(1, 'months'))
         } else if (selected.value === '3 Month') {
-            setStartDate(moment(startDate._d).add(3, 'months'))
-            setEndDate(moment(endDate._d).add(3, 'months'))
+            setStartDate(moment(startDate).add(3, 'months'))
+            setEndDate(moment(endDate).add(3, 'months'))
         } else if (selected.value === '6 Month') {
-            setStartDate(moment(startDate._d).add(6, 'months'))
-            setEndDate(moment(endDate._d).add(6, 'months'))
+            setStartDate(moment(startDate).add(6, 'months'))
+            setEndDate(moment(endDate).add(6, 'months'))
+        }
+    }
+
+    const changeDate = (date) => {
+        if (selected.value === '1 Week') {
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(7, 'days'))
+        } else if (selected.value === '1 Month') {
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(1, 'months'))
+        } else if (selected.value === '3 Month') {
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(3, 'months'))
+        } else if (selected.value === '6 Month') {
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(6, 'months'))
         }
     }
 
@@ -89,25 +108,8 @@ const R3ComparativeTrend = () => {
                     <Card>
                         <CardBody>
                             <Row>
-                                {/* <Col xl='1'>
-                                <Flatpickr
-                                placeholder="Calendar"
-                                className="form-control"
-                                value={picker}
-                                onChange={(date) => {
-                                    return setPicker(date)
-                                }}
-                                id="range-picker"
-                                options={{
-                                    enableTime: true,
-                                    allowInput: true
-                                    //mode: 'range'
-                                }}
-                                />
-                            </Col> */}
                                 <Col xl='2'></Col>
                                 <Col xl='1' style={{ textAlignLast: 'right', alignSelf: 'center' }}>
-                                    {/* <ChevronsLeft size={35} className='cursor-pointer'/> */}
                                     <BiLeftArrow size={35} className='cursor-pointer' onClick={() => clickLeft()} />
                                 </Col>
                                 <Col xl='2'>
@@ -115,9 +117,7 @@ const R3ComparativeTrend = () => {
                                         className="form-control"
                                         value={startDate._d}
                                         placeholder="Start Date"
-                                        onChange={(date) => {
-                                            return setStartDate(date)
-                                        }}
+                                        onChange={(date) => { setStartDate(date) }}
                                         id="default-picker"
                                         style={{ textAlign: 'center'}}
                                         options={{
@@ -136,9 +136,8 @@ const R3ComparativeTrend = () => {
                                         className="form-control"
                                         value={endDate._d}
                                         placeholder="End Date"
-                                        onChange={(date) => {
-                                            return setEndDate(date)
-                                        }}
+                                        // onChange={(date) => { setEndDate(moment(date[0])) }}
+                                        onChange={(date) => changeDate(date)}
                                         id="default-picker"
                                         style={{ textAlign: 'center'}}
                                         options={{
@@ -151,14 +150,6 @@ const R3ComparativeTrend = () => {
                                         }}
                                     /> 
                                 </Col>
-                                {/* <Col xl='2'>
-                                    <input 
-                                    // value={endDate}
-                                    placeholder="End Date"
-                                    style={{ textAlign: 'center'}}
-                                    id="secondRangeInput"
-                                    className="form-control" />
-                                </Col> */}
                                 <Col xl='1'>
                                     <Select 
                                         className = 'react-select'
@@ -172,7 +163,6 @@ const R3ComparativeTrend = () => {
                                 </Col>
                                 <Col xl='1' style={{ alignSelf: 'center' }}>
                                     <BiRightArrow size={35} className='cursor-pointer' onClick={() => clickRight()} />
-                                    {/* <ChevronsRight size={35} className='cursor-pointer' /> */}
                                 </Col>
                                 
                                 <Col xl='1'>
