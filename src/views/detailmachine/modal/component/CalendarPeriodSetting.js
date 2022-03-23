@@ -7,9 +7,10 @@ import Select from 'react-select'
 import moment from 'moment'
 
 const CalendarPeriodSetting = (props) => {
-    console.log('calendar props', props)
     // const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
     // const [endDate, setEndDate] = useState(moment(new Date()))
+    const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
+    const [endDate, setEndDate] = useState(moment(new Date()))
     // const selectOption = [ 
     //     { value: '1 weeks', label: '1 Week'},
     //     { value: '1 months', label: '1 Month'},
@@ -18,12 +19,12 @@ const CalendarPeriodSetting = (props) => {
     // ]
     // const [selected, setSelected] = useState(selectOption[0])
 
-  
+ 
     const clickCurrent = () => {
         // setStartDate(moment(new Date()))
         // setEndDate(moment(new Date()))
-        props.setStartDate(moment(new Date()).subtract(7, 'days'))
-        props.setEndDate(moment(new Date()))
+        setStartDate(moment(new Date()).subtract(7, 'days'))
+        setEndDate(moment(new Date()))
         props.setSelected(props.selectOption[0])
         props.setItvValue(props.selectOption[0].value)
     }
@@ -31,66 +32,72 @@ const CalendarPeriodSetting = (props) => {
     const changeValue = (e) => { 
         if (e.value === '1 weeks') {
             // setStartDate(moment(endDate).subtract(7, 'days'))
-            props.setStartDate(moment(props.endDate).subtract(7, 'days'))
+            setStartDate(moment(endDate).subtract(7, 'days'))
             props.setSelected(props.selectOption[0])
         } else if (e.value === '1 months') {
-            props.setStartDate(moment(props.endDate).subtract(1, 'months'))
+            setStartDate(moment(endDate).subtract(1, 'months'))
             props.setSelected(props.selectOption[1])
         } else if (e.value === '3 months') {
-            props.setStartDate(moment(props.endDate).subtract(3, 'months'))
+            setStartDate(moment(endDate).subtract(3, 'months'))
             props.setSelected(props.selectOption[2])
         } else if (e.value === '6 months') {
-            props.setStartDate(moment(props.endDate).subtract(6, 'months'))
+            setStartDate(moment(endDate).subtract(6, 'months'))
             props.setSelected(props.selectOption[3])
         }
     }
 
     const clickLeft = () => {
         if (props.selected.value === '1 weeks') {
-            props.setStartDate(moment(props.startDate).subtract(7, 'days'))
-            props.setEndDate(moment(props.endDate).subtract(7, 'days'))
+            setStartDate(moment(startDate).subtract(7, 'days'))
+            setEndDate(moment(endDate).subtract(7, 'days'))
         } else if (props.selected.value === '1 months') {
-            props.setStartDate(moment(props.startDate).subtract(1, 'months'))
-            props.setEndDate(moment(props.endDate).subtract(1, 'months'))
+            setStartDate(moment(startDate).subtract(1, 'months'))
+            setEndDate(moment(endDate).subtract(1, 'months'))
         } else if (props.selected.value === '3 months') {
-            props.setStartDate(moment(startDate).subtract(3, 'months'))
-            props.setEndDate(moment(props.endDate).subtract(3, 'months'))
+            setStartDate(moment(startDate).subtract(3, 'months'))
+            setEndDate(moment(endDate).subtract(3, 'months'))
         } else if (props.selected.value === '6 months') {
-            props.setStartDate(moment(props.startDate).subtract(6, 'months'))
-            props.setEndDate(moment(props.endDate).subtract(6, 'months'))
+            setStartDate(moment(startDate).subtract(6, 'months'))
+            setEndDate(moment(endDate).subtract(6, 'months'))
         }
     }
 
     const clickRight = () => {
         if (props.selected.value === '1 weeks') {
-            props.setStartDate(moment(props.startDate).add(7, 'days'))
-            props.setEndDate(moment(props.endDate).add(7, 'days'))
+            setStartDate(moment(startDate).add(7, 'days'))
+            setEndDate(moment(endDate).add(7, 'days'))
         } else if (props.selected.value === '1 months') {
-            props.setStartDate(moment(props.startDate).add(1, 'months'))
-            props.setEndDate(moment(props.endDate).add(1, 'months'))
+            setStartDate(moment(startDate).add(1, 'months'))
+            setEndDate(moment(endDate).add(1, 'months'))
         } else if (props.selected.value === '3 months') {
-            props.setStartDate(moment(props.startDate).add(3, 'months'))
-            props.setEndDate(moment(props.endDate).add(3, 'months'))
+            setStartDate(moment(startDate).add(3, 'months'))
+            setEndDate(moment(endDate).add(3, 'months'))
         } else if (props.selected.value === '6 months') {
-            props.setStartDate(moment(props.startDate).add(6, 'months'))
-            props.setEndDate(moment(props.endDate).add(6, 'months'))
+            setStartDate(moment(startDate).add(6, 'months'))
+            setEndDate(moment(endDate).add(6, 'months'))
         }
     }
 
     const changeDate = (date) => {
         if (props.selected.value === '1 weeks') {
-            props.setEndDate(moment(date[0]))
-            props.setStartDate(moment(date[0]).subtract(7, 'days'))
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(7, 'days'))
         } else if (props.selected.value === '1 months') {
-            props.setEndDate(moment(date[0]))
-            props.setStartDate(moment(date[0]).subtract(1, 'months'))
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(1, 'months'))
         } else if (props.selected.value === '3 months') {
-            props.setEndDate(moment(date[0]))
-            props.setStartDate(moment(date[0]).subtract(3, 'months'))
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(3, 'months'))
         } else if (props.selected.value === '6 months') {
-            props.setEndDate(moment(date[0]))
-            props.setStartDate(moment(date[0]).subtract(6, 'months'))
+            setEndDate(moment(date[0]))
+            setStartDate(moment(date[0]).subtract(6, 'months'))
         }
+    }
+
+
+    const clickSearch = () => {
+        props.setStartDate(startDate)
+        props.setEndDate(endDate)
     }
 
     return (
@@ -101,7 +108,7 @@ const CalendarPeriodSetting = (props) => {
                         <CardBody>
                             <Row>
                                 <Col xl='1'>
-                                    <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Calendar</Button.Ripple>
+                                    {/* <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Calendar</Button.Ripple> */}
                                 </Col>
                                 <Col xl='1' />
                                 <Col xl='1' style={{ textAlignLast: 'right', alignSelf: 'center' }}>
@@ -110,10 +117,10 @@ const CalendarPeriodSetting = (props) => {
                                 <Col xl='2'>
                                     <Flatpickr
                                         className="form-control"
-                                        value={props.startDate._d}
+                                        value={startDate.format('YYYY-MM-DD HH:mm')}
                                         placeholder="Start Date"
-                                        onChange={(date) => { props.setStartDate(date) }}
-                                        
+                                        // onChange={(date) => { props.setStartDate(moment(date[0])) }}
+                                        onChange={(date) => setStartDate(moment(date[0]))}
                                         id="default-picker"
                                         style={{ textAlign: 'center'}}
                                         options={{
@@ -126,12 +133,9 @@ const CalendarPeriodSetting = (props) => {
                                 <Col xl='2'>
                                     <Flatpickr
                                         className="form-control"
-                                        value={props.endDate._d}
+                                        value={endDate.format('YYYY-MM-DD HH:mm')}
                                         placeholder="End Date"
-                                        // onChange={(date) => {
-                                        //     return setEndDate(date)
-                                        // }}
-                                        onChange={(date) => { changeDate(date); props.setEndDate(moment(date[0])) }}
+                                        onChange={(date) => { changeDate(date); setEndDate(moment(date[0])) }} //changeDate(date); 
                                         id="default-picker"
                                         style={{ textAlign: 'center'}}
                                         options={{           
@@ -146,7 +150,6 @@ const CalendarPeriodSetting = (props) => {
                                         classNamePrefix = 'select'
                                         options = {props.selectOption}
                                         menuPlacement = 'auto'
-                                        // onChange = {changeValue}
                                         onChange={e => { changeValue(e); props.setItvValue(e.value) }}
                                         value = {props.selected}
                                     >
@@ -157,7 +160,11 @@ const CalendarPeriodSetting = (props) => {
                                 </Col>
                                 
                                 <Col xl='1'>
-                                    <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Search</Button.Ripple>
+                                    <Button.Ripple 
+                                        color='primary'
+                                        onClick={() => clickSearch()}
+                                        style={{inlineSize: '-webkit-fill-available'}}
+                                    >Search</Button.Ripple>
                                 </Col>
                                 <Col xl='1'>
                                     <Button.Ripple 

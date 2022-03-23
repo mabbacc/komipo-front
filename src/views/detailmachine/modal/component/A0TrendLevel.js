@@ -10,9 +10,6 @@ import { useSelector } from 'react-redux'
 
 
 const A0TrendLevel = (props) => {
-  // console.log('A0 props', props)
-  // console.log('startDate', props.startDate)
-  // console.log('endDate', props.endDate)
   const { hierarchy } = useSelector(state => state.hierarchy)
   const { equipment } = useSelector(state => state.equipment)
 
@@ -24,7 +21,6 @@ const A0TrendLevel = (props) => {
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
-  
 
   const source = axios.CancelToken.source()
 
@@ -37,7 +33,7 @@ const A0TrendLevel = (props) => {
   }, [props])
 
 
-  useEffect(() => {
+  const fetchData = (endDate, startDate) => {
     if (selectMptOption.value !== undefined) { 
       axios
         .get(process.env.REACT_APP_API_SERVER_URL + 
@@ -62,7 +58,40 @@ const A0TrendLevel = (props) => {
           source.cancel('Canceling in cleanup')
         }
       } 
-    }, [selectMptOption, itvValue, startDate, endDate])
+  }
+  
+  useEffect(() => {
+    fetchData(endDate, startDate)
+  }, [endDate, startDate])
+
+
+  // useEffect(() => {
+  //   if (selectMptOption.value !== undefined) { 
+  //     axios
+  //       .get(process.env.REACT_APP_API_SERVER_URL + 
+  //         '/front/detail-analysis/trend?mptkey=' + selectMptOption.value + 
+  //         '&itv=' + itvValue +
+  //         '&end_dt=' + endDate +
+  //         '&start_dt=' + startDate
+  //       , {
+  //         cancelToken: source.token
+  //       })
+  //       .then((res) => {
+  //         setChartData(res.data)
+  //       })
+  //       .catch((error) => {
+  //         if (axios.isCancel(error)) {
+  //           console.log('Cancel Loading')
+  //         } else {
+  //           toast.warning(<ErrorToast msg={'에러가 발생했습니다.[' + error.message + ']'} />, { autoClose: 3000 })
+  //         }
+  //       })
+  //       return () => {
+  //         source.cancel('Canceling in cleanup')
+  //       }
+  //     } 
+  //   }, [selectMptOption, itvValue, startDate, endDate])
+
 
   useEffect(() => {
     const chart = {
@@ -96,7 +125,9 @@ const A0TrendLevel = (props) => {
           width: 2
         },
         noData: {
-          text: 'No Data'
+          text: 'No Data',
+          align: 'center',
+          verticalAlign: 'middle'
         },
         xaxis: {
           // type: 'category',
@@ -136,9 +167,6 @@ const A0TrendLevel = (props) => {
     }
   }, [chartData])
 
-  // const hierarchyView = () => {
-  //   console.log(JSON.stringify(hierarchyStore))
-  // }
 
   return (
     <Fragment>
@@ -181,9 +209,6 @@ const A0TrendLevel = (props) => {
           </Card>
         </Col>
       </Row>
-
-      {/* <CalendarPeriodSetting setItvValue={setItvValue}/> */}
-
     </Fragment>
   )
 }

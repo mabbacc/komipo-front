@@ -7,9 +7,12 @@ import A2cOrbit from "./graphs/A2cOrbit"
 import axios from "axios"
 import SelectPeriodSetting from './SelectPeriodSetting'
 
-const A2OrbitWaveform = () => {
+const A2OrbitWaveform = (props) => {
+    // console.log('a2', props)
     const [chartData, setChartData] = useState([])
-    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+    const [measdt, setMeasdt] = useState({})
+    const [pairMptValue, setPairMptValue] = useState(null)
+    const [selectMptOption, setSelectMptOption] = useState({})
     const filterOption = [
         { value: 'none', label: 'none'},
         { value: '1X Filter', label: '1X Filter'}
@@ -23,23 +26,40 @@ const A2OrbitWaveform = () => {
             setSelected(filterOption[1])
         }
     }
+
+    useEffect(() => {
+        setSelectMptOption(props.selectMptOption)
+        setPairMptValue(props.pairMptValue)
+        setMeasdt(props.measdt)
+      }, [props])
     
-    const fetchData = (filterValue) => {
+    const fetchData = (filterValue, mptkey, measdt) => {
+        //waveform?filter=true&mptkey=9&measdt=2019-10-29 08:13:39
+        if (selectMptOption.value !== undefined && measdt !== undefined) { 
         axios
-        .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/waveform?filter=' + filterValue)
+        .get(process.env.REACT_APP_API_SERVER_URL + 
+            '/front/detail-analysis/waveform?filter=' + filterValue +
+            '&mptkey=' + mptkey +
+            '&measdt=' + measdt)
         .then((res) => {
           setChartData(res.data)
-          console.log('Orbit none', res.data)
+          // console.log('Orbit, waveform', res.data)
         }) 
+    }
     }
     
     useEffect(() => {
         if (selected.value === 'none') {
-            fetchData(false)
+            fetchData(false, selectMptOption.value, measdt.value)
         } else if (selected.value === '1X Filter') {
-            fetchData(true)
+            fetchData(true, selectMptOption.value, measdt.value)
         }
-    }, [selected.value])
+    }, [selected.value, selectMptOption.value, measdt.value])
+
+    // useEffect(() => {
+    //     fetchData(false, selectMptOption.value)
+    // }, [selectMptOption.value])
+
 
     return (
         <Fragment>
@@ -49,15 +69,21 @@ const A2OrbitWaveform = () => {
                         <CardBody>
                             <Row>
                                 <Col xl='1'>
-                                    <div className="form-control">PAF-A</div>
+                                    <div className="form-control">{props.equipmentid.label}</div>
                                 </Col>
                                 <Col xl='2'>
                                     <Select 
-                                        defaultValue={selectOption}
+                                        className='react-select'
+                                        classNamePrefix='select'
+                                        value={selectMptOption}
+                                        options={props.mptOption}
+                                        onChange={(value) => {
+                                          setSelectMptOption(value); props.setSelectMptOption(value)
+                                        }}
                                     />
                                 </Col>
                                 <Col xl='2'>
-                                    <div className="form-control">MOTOR Outboard VIB - Y</div>
+                                    <div className="form-control">{pairMptValue}</div>
                                 </Col>
                                 <Col xl='5' />
                                 <Col xl='2'>
@@ -97,7 +123,6 @@ const A2OrbitWaveform = () => {
                 </Col>
             </Row>
 
-            <SelectPeriodSetting /> 
         </Fragment>
     )
 }

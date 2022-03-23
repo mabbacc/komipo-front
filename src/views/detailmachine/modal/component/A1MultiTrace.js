@@ -24,20 +24,39 @@ const A1MultiTrace = (props) => {
         setEndDate(moment(props.endDate._d).format('YYYY-MM-DD'))
     }, [props])
 
-    useEffect(() => {
+    const fetchData = (endDate, startDate) => {
         if (selectMptOption.value !== undefined) { 
-        axios
-            .get(process.env.REACT_APP_API_SERVER_URL + 
-                '/front/detail-analysis/multi-trend?mptkey=' + selectMptOption.value + 
-                '&itv=' + itvValue +
-                '&end_dt=' + endDate +
-                '&start_dt=' + startDate
-                )
-            .then((res) => {
-              setChartData(res.data)
-            })
-        }
-      }, [selectMptOption, itvValue, startDate, endDate])
+            axios
+                .get(process.env.REACT_APP_API_SERVER_URL + 
+                    '/front/detail-analysis/multi-trend?mptkey=' + selectMptOption.value + 
+                    '&itv=' + itvValue +
+                    '&end_dt=' + endDate +
+                    '&start_dt=' + startDate
+                    )
+                .then((res) => {
+                  setChartData(res.data)
+                })
+            } 
+    }
+
+    useEffect(() => {
+        fetchData(endDate, startDate)
+    }, [endDate, startDate])
+
+    // useEffect(() => {
+    //     if (selectMptOption.value !== undefined) { 
+    //     axios
+    //         .get(process.env.REACT_APP_API_SERVER_URL + 
+    //             '/front/detail-analysis/multi-trend?mptkey=' + selectMptOption.value + 
+    //             '&itv=' + itvValue +
+    //             '&end_dt=' + endDate +
+    //             '&start_dt=' + startDate
+    //             )
+    //         .then((res) => {
+    //           setChartData(res.data)
+    //         })
+    //     }
+    //   }, [selectMptOption, itvValue, startDate, endDate])
 
 
     return (
