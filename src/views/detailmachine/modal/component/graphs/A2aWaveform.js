@@ -74,7 +74,7 @@ const A2aWaveform = (props) => {
       }
 
 
-    if (props.graphData !== undefined) {
+    if (props.graphData !== undefined && props.graphData.series[0].data.length > 0) {
       chartData.series = props.graphData.series
       if (props.graphData.xaxis[0].categories.length > 0) {
         chartData.options.xaxis.categories = props.graphData.xaxis[0].categories
@@ -89,9 +89,6 @@ const A2aWaveform = (props) => {
             <Row>
                 <Col>
                     <Card>
-                        {/* <CardHeader>
-                            <CardTitle>Waveform 1</CardTitle>
-                        </CardHeader> */}
                         <CardBody>
                             <Row>
                                 <Col>

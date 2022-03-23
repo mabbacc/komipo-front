@@ -90,9 +90,6 @@ const A2bWaveform = (props) => {
       <Row>
         <Col>
           <Card>
-            {/* <CardHeader>
-                            <CardTitle>Waveform 2</CardTitle>
-                        </CardHeader> */}
             <CardBody>
               <Row>
                 <Col>

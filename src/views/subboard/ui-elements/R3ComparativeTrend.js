@@ -130,7 +130,7 @@ const R3ComparativeTrend = () => {
                                         }}
                                     /> 
                                 </Col>
-                                <span style={{ width: '0', alignSelf: 'center'}}>~</span>
+                                <Col xl='1' style={{ width: '0', alignSelf: 'center'}}>~</Col>
                                 <Col xl='2'>
                                     <Flatpickr
                                         className="form-control"
@@ -161,7 +161,7 @@ const R3ComparativeTrend = () => {
                                     >
                                     </Select>
                                 </Col>
-                                <Col xl='1' style={{ alignSelf: 'center' }}>
+                                <Col xl='1' style={{ alignSelf: 'center', marginRight: '118px'  }}>
                                     <BiRightArrow size={35} className='cursor-pointer' onClick={() => clickRight()} />
                                 </Col>
                                 

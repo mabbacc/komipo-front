@@ -107,10 +107,7 @@ const CalendarPeriodSetting = (props) => {
                     <Card>
                         <CardBody>
                             <Row>
-                                <Col xl='1'>
-                                    {/* <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Calendar</Button.Ripple> */}
-                                </Col>
-                                <Col xl='1' />
+                                <Col xl='2' />
                                 <Col xl='1' style={{ textAlignLast: 'right', alignSelf: 'center' }}>
                                     <BiLeftArrow size={35} className='cursor-pointer' onClick={() => clickLeft()} />
                                 </Col>
