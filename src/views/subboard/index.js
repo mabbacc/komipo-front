@@ -26,7 +26,9 @@ const SubboardIndex = ({ location }) => {
     }, [])
 
     useEffect(() => {
-        setEquipmenttype(location.state.equipmenttype)
+        if (location.state.equipmenttype !== null) {
+            setEquipmenttype(location.state.equipmenttype)
+        }
     }, [location.state])
 
     return (
