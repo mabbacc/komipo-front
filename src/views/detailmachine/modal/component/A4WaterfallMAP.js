@@ -2,22 +2,43 @@ import { Fragment, useState, useEffect } from "react"
 import { Card, CardBody, Col, Row } from "reactstrap"
 import Select from 'react-select'
 import axios from "axios"
+import moment from 'moment'
 import A4aWaterfall from "./graphs/A4aWaterfall"
 import A4bColorMap from './graphs/A4bColorMap'
-import CalendarPeriodSetting from "./CalendarPeriodSetting"
+import { useSelector } from "react-redux"
 
-const A4WaterfallMAP = () => {
+const A4WaterfallMAP = (props) => {
     const [chartData, setChartData] = useState([])
-    const selectOption = { value: 'Motor Outboard VIB - X', label: 'Motor Outboard VIB - X'}
+    const { equipment } = useSelector(state => state.equipment)
+
+    const [pairMptValue, setPairMptValue] = useState(null)
+    const [selectMptOption, setSelectMptOption] = useState({})
+    const [itvValue, setItvValue] = useState(null)
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState()
 
     useEffect(() => {
+        setSelectMptOption(props.selectMptOption)
+        setPairMptValue(props.pairMptValue)
+        setItvValue(props.itvValue)
+        setStartDate(moment(props.startDate._d).format('YYYY-MM-DD'))
+        setEndDate(moment(props.endDate._d).format('YYYY-MM-DD'))
+    }, [props])
+
+    useEffect(() => {
+        if (selectMptOption.value !== undefined) { 
         axios
-          .get(process.env.REACT_APP_API_SERVER_URL + '/front/detail-analysis/waterfall')
+        .get(process.env.REACT_APP_API_SERVER_URL + 
+            '/front/detail-analysis/waterfall?mptkey=' + selectMptOption.value + 
+            '&itv=' + itvValue +
+            '&end_dt=' + endDate +
+            '&start_dt=' + startDate
+            )
           .then((res) => {
             setChartData(res.data)
-            console.log('waterfall/Color Map', res.data)
           })
-      }, [])
+        }
+      }, [selectMptOption, itvValue, startDate, endDate])
 
     return (
         <Fragment>
@@ -27,15 +48,21 @@ const A4WaterfallMAP = () => {
                         <CardBody>
                             <Row>
                                 <Col xl='1'>
-                                    <div className="form-control">PAF-A</div>
+                                    <div className="form-control">{props.equipmentid.label}</div>
                                 </Col>
                                 <Col xl='2'>
                                     <Select 
-                                        defaultValue={selectOption}
+                                        className='react-select'
+                                        classNamePrefix='select'
+                                        value={selectMptOption}
+                                        options={props.mptOption}
+                                        onChange={(value) => {
+                                          setSelectMptOption(value); props.setSelectMptOption(value)
+                                        }}
                                     />
                                 </Col>
                                 <Col xl='2'>
-                                    <div className="form-control">MOTOR Outboard VIB - Y</div>
+                                    <div className="form-control">{pairMptValue}</div>
                                 </Col>
                             </Row>
                         </CardBody>
@@ -56,7 +83,6 @@ const A4WaterfallMAP = () => {
                 </Col>
             </Row>
 
-            <CalendarPeriodSetting /> 
         </Fragment>
     )
 }

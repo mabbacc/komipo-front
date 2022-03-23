@@ -7,20 +7,20 @@ import moment from 'moment'
 import { toast } from 'react-toastify'
 import ErrorToast from '../../../toast/ErrorToast'
 import { useSelector } from 'react-redux'
-import CalendarPeriodSetting from './CalendarPeriodSetting'
+
 
 const A0TrendLevel = (props) => {
+  // console.log('A0 props', props)
+  // console.log('startDate', props.startDate)
+  // console.log('endDate', props.endDate)
   const { hierarchy } = useSelector(state => state.hierarchy)
   const { equipment } = useSelector(state => state.equipment)
 
-  // mptkey
-  const [mptOption, setMptOption] = useState([])
-  const [selectMptOption, setSelectMptOption] = useState([])
   const [pairMptValue, setPairMptValue] = useState(null)
-
-  // itv
-  const [itvValue, setItvValue] = useState('1 Week')
-  console.log(itvValue)
+  const [selectMptOption, setSelectMptOption] = useState({})
+  const [itvValue, setItvValue] = useState(null)
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
 
   const [chart, setChart] = useState(null)
   const [chartData, setChartData] = useState(null)
@@ -28,55 +28,23 @@ const A0TrendLevel = (props) => {
 
   const source = axios.CancelToken.source()
 
-  // mpt select option
   useEffect(() => {
-    if (equipment.length > 0) {
-      const selectMptOptionList = []
+    setSelectMptOption(props.selectMptOption)
+    setPairMptValue(props.pairMptValue)
+    setItvValue(props.itvValue)
+    setStartDate(moment(props.startDate._d).format('YYYY-MM-DD'))
+    setEndDate(moment(props.endDate._d).format('YYYY-MM-DD'))
+  }, [props])
 
-      equipment.forEach((item) => {
-        (item.child).forEach((item) => {
-          if (item.equipmentid === props.equipmentid.label) {
-            (item.child).forEach((item) => {
-              (item.child).forEach((item) => {
-                selectMptOptionList.push({
-                  value: item.mptkey,
-                  label: item.description
-                  //label: item.mptid
-                })
-              })
-            })
-          }
-        })
-      })
-      setMptOption(selectMptOptionList)
-      setSelectMptOption(selectMptOptionList[0])
-    }
-  }, [equipment, props])
-
-  // pair mpt value
-  useEffect(() => {
-    if (equipment.length > 0) {
-      equipment.forEach((item) => {
-        (item.child).forEach((item) => {
-          (item.child).forEach((item) => {
-            (item.child).forEach((item) => {
-              if (selectMptOption.value === item.companionmptkey) {
-                setPairMptValue(item.description)
-              }
-            })
-          })
-        })
-      })
-    }
-  }, [equipment, selectMptOption])
 
   useEffect(() => {
     if (selectMptOption.value !== undefined) { 
       axios
         .get(process.env.REACT_APP_API_SERVER_URL + 
-          '/front/detail-analysis/trend?mptkey=' + 
-          selectMptOption.value + 
-          '&itv=1 months&end_dt=2019-11-08'
+          '/front/detail-analysis/trend?mptkey=' + selectMptOption.value + 
+          '&itv=' + itvValue +
+          '&end_dt=' + endDate +
+          '&start_dt=' + startDate
         , {
           cancelToken: source.token
         })
@@ -94,7 +62,7 @@ const A0TrendLevel = (props) => {
           source.cancel('Canceling in cleanup')
         }
       } 
-    }, [selectMptOption])
+    }, [selectMptOption, itvValue, startDate, endDate])
 
   useEffect(() => {
     const chart = {
@@ -126,6 +94,9 @@ const A0TrendLevel = (props) => {
         stroke: {
           curve: 'straight',
           width: 2
+        },
+        noData: {
+          text: 'No Data'
         },
         xaxis: {
           // type: 'category',
@@ -184,9 +155,9 @@ const A0TrendLevel = (props) => {
                     className='react-select'
                     classNamePrefix='select'
                     value={selectMptOption}
-                    options={mptOption}
+                    options={props.mptOption}
                     onChange={(value) => {
-                      setSelectMptOption(value)
+                      setSelectMptOption(value); props.setSelectMptOption(value)
                     }}
                     />
                 </Col>
@@ -202,9 +173,6 @@ const A0TrendLevel = (props) => {
       <Row>
         <Col>
           <Card>
-            {/* <CardHeader>
-                            <CardTitle>Overall Trend</CardTitle>
-                        </CardHeader> */}
             <CardBody>
               <Row>
                 <Col>{chart !== null ? <Chart options={chart.options} series={chart.series} type="line" height="500" width="100%" /> : null}</Col>
@@ -214,7 +182,7 @@ const A0TrendLevel = (props) => {
         </Col>
       </Row>
 
-      <CalendarPeriodSetting setItvValue={setItvValue}/>
+      {/* <CalendarPeriodSetting setItvValue={setItvValue}/> */}
 
     </Fragment>
   )
