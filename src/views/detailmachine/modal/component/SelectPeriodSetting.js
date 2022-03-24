@@ -5,18 +5,21 @@ import { Col, Row, Card, CardBody, Button } from "reactstrap"
 import { BiRightArrow, BiLeftArrow } from 'react-icons/bi'
 import Select from 'react-select'
 import axios from "axios"
+import moment from 'moment'
 
 const SelectPeriodSetting = (props) => {
-    // console.log('select props', props)
+    //console.log('select setting', props)
     const [selectMptOption, setSelectMptOption] = useState({})
+    const [waveformDt, setWaveformDt] = useState(undefined)
+    const [spectrumDt, setSpectrumDt] = useState(undefined)
 
-    const [waveformData, setWaveformData] = useState([])
+    const [waveformData, setWaveformData] = useState()
     const [waveformOption, setWaveformOption] = useState([])
     const [selectWaveformOption, setSelectWaveformOption] = useState([])
 
-    const [spectrumData, setSpectrumData] = useState([])
+    const [spectrumData, setSpectrumData] = useState()
     const [spectrumOption, setSpectrumOption] = useState([])
-    const [selectSpectrumOption, setSelectSpectrumOption] = useState({})
+    const [selectSpectrumOption, setSelectSpectrumOption] = useState([])
 
     useEffect(() => {
         setSelectMptOption(props.selectMptOption)
@@ -24,24 +27,31 @@ const SelectPeriodSetting = (props) => {
     
 
     // Waveform select option
-    useEffect(() => {
-        // front/detail-analysis/waveform-dt-list?mptkey=2
-        if (selectMptOption.value !== undefined && props.activeTab === '3') {
+    const waveformFetchData = (waveformDt, selectMptOption) => {
+        let URL = process.env.REACT_APP_API_SERVER_URL +
+        '/front/detail-analysis/waveform-dt-list?mptkey=' + selectMptOption.value
+        if (waveformDt !== undefined) {
+            URL += '&dt=' + waveformDt
+        }
+
+        if (selectMptOption.value !== undefined) {
             axios
-                .get(process.env.REACT_APP_API_SERVER_URL +
-                    '/front/detail-analysis/waveform-dt-list?mptkey=' + selectMptOption.value)
+                .get(URL)
                 .then((res) => {
-                    // console.log('res', res.data)
                     setWaveformData(res.data)
                 })
         }
-    }, [selectMptOption])
+    }
 
     useEffect(() => {
-        if (waveformData.length > 0) {
-            const selectWaveformOptionList = []
+            waveformFetchData(waveformDt, selectMptOption)
+    }, [waveformDt, selectMptOption])
 
-            waveformData.forEach((item) => {
+
+    useEffect(() => {
+        if (waveformData !== undefined) {
+            const selectWaveformOptionList = []
+            waveformData.child.forEach((item) => {
                 if (item !== undefined) {
                     selectWaveformOptionList.push({
                         value: item.measdt,
@@ -51,42 +61,67 @@ const SelectPeriodSetting = (props) => {
             })
             setWaveformOption(selectWaveformOptionList)
             setSelectWaveformOption(selectWaveformOptionList[0])
-            props.setMeasdt(selectWaveformOptionList[0])
+            // props.setMeasdt(selectWaveformOptionList[0])
         }
     }, [waveformData])
 
 
     // spectrum select option
-    useEffect(() => {
-        // front/detail-analysis/spectrum-dt-list?mptkey=2
-        if (selectMptOption.value !== undefined && props.activeTab === '4') {
-            axios
-                .get(process.env.REACT_APP_API_SERVER_URL + 
-                    '/front/detail-analysis/spectrum-dt-list?mptkey=' + selectMptOption.value)
-                .then((res) => {
-                    setSpectrumData(res.data)
-                }) 
+    const spectrumFetchData = (spectrumDt, selectMptOption) => {
+        let URL = process.env.REACT_APP_API_SERVER_URL +
+        '/front/detail-analysis/spectrum-dt-list?mptkey=' + selectMptOption.value
+        if (spectrumDt !== undefined) {
+            URL += '&dt=' + spectrumDt
         }
-    }, [selectMptOption])
 
+        if (selectMptOption.value !== undefined) {
+            axios
+                .get(URL)
+                .then((res) => {
+                    console.log('dfdf', res.data)
+                    setSpectrumData(res.data)
+                })
+        } 
+    }
 
     useEffect(() => {
-        if (spectrumData.length > 0) {
+        spectrumFetchData(spectrumDt, selectMptOption)
+    }, [spectrumDt, selectMptOption])
+
+    useEffect(() => {
+        if (spectrumData !== undefined) {
             const selectSpectrumOptionList = []
-    
-            spectrumData.forEach((item) => {
+            spectrumData.child.forEach((item) => {
                 if (item !== undefined) {
                     selectSpectrumOptionList.push({
-                        value: item.measdt, 
+                        value: item.measdt,
                         label: item.measdt
                     })
-                }
+                } 
             })
             setSpectrumOption(selectSpectrumOptionList)
             setSelectSpectrumOption(selectSpectrumOptionList[0])
-            props.setMeasdt(selectSpectrumOptionList[0])
-        }
+        } 
     }, [spectrumData])
+
+    // currnet Click (currnet data)
+    const clickCurrent = () => {
+        if (props.activeTab === '3') { 
+            waveformFetchData(undefined, selectMptOption)
+        } else if (props.activeTab === '4') {
+            spectrumFetchData(undefined, selectMptOption)
+        }
+    }
+
+    // search Click
+    const clickSearch = () => {
+        if (props.activeTab === '3') {
+            props.setMeasdt(selectWaveformOption)
+        } else if (props.activeTab === '4') {
+            props.setMeasdt(selectSpectrumOption)
+        }
+    }
+
 
     return (
         <Fragment>
@@ -95,8 +130,87 @@ const SelectPeriodSetting = (props) => {
                     <Card>
                         <CardBody>
                             <Row>
+                                <Col xl='4'>
+                                </Col>
+                                <Col xl='2'> 
+                                    {props.activeTab === '3' ? 
+                                        <Flatpickr
+                                            className='form-control'
+                                            id='default-picker'
+                                            placeholder='Select Date'
+                                            onChange={(date) => setWaveformDt(moment(date[0]).format('YYYY-MM-DD'))}
+                                            value={waveformData && waveformData.dt}
+                                            style={{ textAlign: 'center' }}
+                                            options={{
+                                                enableTime: false,
+                                                allowInput: true
+                                            }}
+                                        /> :
+                                        <Flatpickr
+                                            className='form-control'
+                                            id='default-picker'
+                                            placeholder='Select Date'
+                                            onChange={(date) => setSpectrumDt(moment(date[0]).format('YYYY-MM-DD'))}
+                                            value={spectrumData && spectrumData.dt}
+                                            style={{ textAlign: 'center' }}
+                                            options={{
+                                                enableTime: false,
+                                                allowInput: true
+                                            }}
+                                        />    
+                                    }
+                                
+                                </Col>
+                                <Col xl='2'>
+                                    {props.activeTab === '3' ? 
+                                        <Select 
+                                            className = 'react-select'
+                                            classNamePrefix = 'select'
+                                            placeholder='No data'
+                                            options={waveformOption}
+                                            value={selectWaveformOption}
+                                            menuPlacement = 'auto'
+                                            onChange={(value) => { setSelectWaveformOption(value) }}
+                                        /> : 
+                                        <Select 
+                                            className = 'react-select'
+                                            classNamePrefix = 'select'
+                                            placeholder='No data'
+                                            options={spectrumOption}
+                                            value={selectSpectrumOption}
+                                            menuPlacement = 'auto'
+                                            onChange={(value) => { setSelectSpectrumOption(value) }} //; setMeasdt(value)
+                                        /> 
+                                    }
+                                </Col>
+                                <Col xl='2'/>
                                 <Col xl='1'>
-                                    {/* <Button.Ripple color='primary' style={{inlineSize: '-webkit-fill-available'}}>Calendar</Button.Ripple> */}
+                                    <Button.Ripple 
+                                        color='primary'
+                                        onClick={() => clickSearch()}
+                                        style={{inlineSize: '-webkit-fill-available'}}
+                                    >Search</Button.Ripple>
+                                </Col>
+                                <Col xl='1'>
+                                    <Button.Ripple 
+                                        color='primary' 
+                                        onClick={() => clickCurrent()} 
+                                        style={{inlineSize: '-webkit-fill-available'}}
+                                    >Current</Button.Ripple>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+
+
+            {/* <Row>
+                <Col>
+                    <Card>
+                        <CardBody>
+                            <Row>
+                                <Col xl='1'>
                                 </Col>
                                 <Col xl='1' />
                                 <Col xl='1' style={{ textAlignLast: 'right', alignSelf: 'center' }}>
@@ -140,7 +254,7 @@ const SelectPeriodSetting = (props) => {
                         </CardBody>
                     </Card>
                 </Col>
-            </Row>
+            </Row> */}
         </Fragment>
     )
 }

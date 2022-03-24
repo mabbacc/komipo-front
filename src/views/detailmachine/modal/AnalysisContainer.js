@@ -38,6 +38,8 @@ const AnalysisContainer = (props) => {
 
     // measdt
     const [measdt, setMeasdt] = useState([])
+    // const [waveformData, setWaveformData] = useState([])
+    // const [spectrumData, setSpectrumData] = useState([])
 
     const toggleTabs = (tab) => {
         if (activeTab !== tab) {
@@ -233,7 +235,11 @@ const AnalysisContainer = (props) => {
                     activeTab={activeTab}
                     mptOption={mptOption}
                     selectMptOption={selectMptOption}
+                    // waveformDt={waveformDt}
+                    // spectrumDt={spectrumDt}
                     setMeasdt={setMeasdt}
+                    // setWaveformData={setWaveformData}
+                    // setSpectrumData={setSpectrumData}
                 /> 
                 : <CalendarPeriodSetting 
                     itvValue={itvValue}

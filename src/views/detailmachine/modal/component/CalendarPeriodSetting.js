@@ -7,22 +7,10 @@ import Select from 'react-select'
 import moment from 'moment'
 
 const CalendarPeriodSetting = (props) => {
-    // const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
-    // const [endDate, setEndDate] = useState(moment(new Date()))
     const [startDate, setStartDate] = useState(moment(new Date()).subtract(7, 'days'))
     const [endDate, setEndDate] = useState(moment(new Date()))
-    // const selectOption = [ 
-    //     { value: '1 weeks', label: '1 Week'},
-    //     { value: '1 months', label: '1 Month'},
-    //     { value: '3 months', label: '3 Month'},
-    //     { value: '6 months', label: '6 Month'}
-    // ]
-    // const [selected, setSelected] = useState(selectOption[0])
-
  
     const clickCurrent = () => {
-        // setStartDate(moment(new Date()))
-        // setEndDate(moment(new Date()))
         setStartDate(moment(new Date()).subtract(7, 'days'))
         setEndDate(moment(new Date()))
         props.setSelected(props.selectOption[0])
@@ -31,7 +19,6 @@ const CalendarPeriodSetting = (props) => {
 
     const changeValue = (e) => { 
         if (e.value === '1 weeks') {
-            // setStartDate(moment(endDate).subtract(7, 'days'))
             setStartDate(moment(endDate).subtract(7, 'days'))
             props.setSelected(props.selectOption[0])
         } else if (e.value === '1 months') {

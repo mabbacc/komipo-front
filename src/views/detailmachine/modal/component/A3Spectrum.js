@@ -7,10 +7,12 @@ import axios from "axios"
 
 
 const A3Spectrum = (props) => {
+    console.log('A3', props)
+    //console.log('ddd', props.spectrumData.child[0].measdt)
     const [chartData, setChartData] = useState([])
     const [pairMptValue, setPairMptValue] = useState(null)
     const [selectMptOption, setSelectMptOption] = useState({})
-    const [measdt, setMeasdt] = useState({})
+    const [measdt, setMeasdt] = useState([])
 
     useEffect(() => {
         setSelectMptOption(props.selectMptOption)
@@ -18,20 +20,22 @@ const A3Spectrum = (props) => {
         setMeasdt(props.measdt)
       }, [props])
 
-    useEffect(() => {
-        // detail-analysis/spectrum?mptkey=9&measdt=2019-10-29 08:13:39
-        if (selectMptOption.value !== undefined && measdt.value !== undefined) {
+    const fetchData = (mptkey, measdt) => {
+        if (selectMptOption.value !== undefined && measdt !== undefined) {
             axios
-              .get(process.env.REACT_APP_API_SERVER_URL + 
+            .get(process.env.REACT_APP_API_SERVER_URL +
                 '/front/detail-analysis/spectrum?' +
-                '&mptkey=' + selectMptOption.value +
+                '&mptkey=' + mptkey +
                 '&measdt=' + measdt.value)
-              .then((res) => {
+            .then((res) => {
                 setChartData(res.data)
-              })
+            })
         }
-      }, [selectMptOption, measdt])
+    }
 
+    useEffect(() => {
+            fetchData(selectMptOption.value, measdt)
+    }, [selectMptOption.value, measdt])
 
     return (
         <Fragment>

@@ -5,12 +5,10 @@ import A2aWavefrom from './graphs/A2aWaveform'
 import A2bWaveform from './graphs/A2bWaveform'
 import A2cOrbit from "./graphs/A2cOrbit"
 import axios from "axios"
-import SelectPeriodSetting from './SelectPeriodSetting'
 
 const A2OrbitWaveform = (props) => {
-    // console.log('a2', props)
     const [chartData, setChartData] = useState([])
-    const [measdt, setMeasdt] = useState({})
+    const [measdt, setMeasdt] = useState([])
     const [pairMptValue, setPairMptValue] = useState(null)
     const [selectMptOption, setSelectMptOption] = useState({})
     const filterOption = [
@@ -34,31 +32,25 @@ const A2OrbitWaveform = (props) => {
       }, [props])
     
     const fetchData = (filterValue, mptkey, measdt) => {
-        //waveform?filter=true&mptkey=9&measdt=2019-10-29 08:13:39
-        if (selectMptOption.value !== undefined && measdt !== undefined) { 
-        axios
-        .get(process.env.REACT_APP_API_SERVER_URL + 
-            '/front/detail-analysis/waveform?filter=' + filterValue +
-            '&mptkey=' + mptkey +
-            '&measdt=' + measdt)
-        .then((res) => {
-          setChartData(res.data)
-          // console.log('Orbit, waveform', res.data)
-        }) 
-    }
+        if (mptkey !== undefined && measdt !== undefined) { 
+            axios
+            .get(process.env.REACT_APP_API_SERVER_URL + 
+                '/front/detail-analysis/waveform?filter=' + filterValue +
+                '&mptkey=' + mptkey +
+                '&measdt=' + measdt.value)
+            .then((res) => {
+            setChartData(res.data)
+            }) 
+        }
     }
     
     useEffect(() => {
         if (selected.value === 'none') {
-            fetchData(false, selectMptOption.value, measdt.value)
+            fetchData(false, selectMptOption.value, measdt)
         } else if (selected.value === '1X Filter') {
-            fetchData(true, selectMptOption.value, measdt.value)
+            fetchData(true, selectMptOption.value, measdt)
         }
-    }, [selected.value, selectMptOption.value, measdt.value])
-
-    // useEffect(() => {
-    //     fetchData(false, selectMptOption.value)
-    // }, [selectMptOption.value])
+    }, [selected.value, selectMptOption.value, measdt])
 
 
     return (
@@ -105,19 +97,16 @@ const A2OrbitWaveform = (props) => {
             <Row>
                 <Col xl='4'>
                     <Card>
-                        {/* <CardBody style={{height: '500px'}}>Waveform 1</CardBody> */}
                         <A2aWavefrom graphData={chartData[0]} />
                     </Card>
                 </Col>
                 <Col xl='4'>
                     <Card>
-                        {/* <CardBody style={{height: '500px'}}>Waveform 2</CardBody> */}
                         <A2bWaveform graphData={chartData[1]} />
                     </Card>
                 </Col>
                 <Col xl='4'>
                     <Card>
-                        {/* <CardBody style={{height: '500px'}}>Orbit</CardBody> */}
                         <A2cOrbit graphData={chartData[2]} />
                     </Card>
                 </Col>
