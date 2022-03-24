@@ -120,7 +120,7 @@ const R1MachineList = (props) => {
                                 value={selectETOption}
                                 options={equipmentTypeOption}
                                 onChange={(value) => {
-                                    setSelectETOption(value)
+                                    setSelectETOption(value); props.setEquipmenttype(value.value)
                                 }}
                             />
                         </Col>
